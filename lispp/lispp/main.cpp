@@ -1,12 +1,14 @@
 #include <iostream>
 // #include <histedit.h>
-#include "lispp.h"
 #include <sstream>
 #include <cstdio>
+#include "lispp.h"
+
 
 int main() {
-    std::stringstream string_stream("(1 2)");
+    std::stringstream string_stream("(+ 1 2)");
     AST ast(&string_stream);
+    ast.InsertLexema();
     ast.InsertLexema();
     ast.InsertLexema();
     ast.InsertLexema();

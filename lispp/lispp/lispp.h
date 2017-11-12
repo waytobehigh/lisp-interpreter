@@ -6,6 +6,8 @@
 #include <vector>
 #include <memory>
 
+#define TEST__DUMP
+
 class Tokenizer {
 public:
     explicit Tokenizer(std::istream* input_stream);
@@ -109,6 +111,7 @@ public:
 private:
     inline void TurnNext();
     inline void TurnDown();
+    void TEST_StatusDump();
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::vector<std::shared_ptr<Pair> > return_stack_;

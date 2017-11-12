@@ -123,7 +123,9 @@ AST::AST(std::istream* input_stream)
 void AST::InsertLexema() {
     ReadNext();
 
-    switch (ShowTokenType()) {
+    curr_->type = ShowTokenType();
+
+    switch (curr_->type) {
         case TokenType::OPEN_PARENT:
             return_stack_.push_back(curr_);
             TurnDown();
@@ -138,16 +140,35 @@ void AST::InsertLexema() {
             TurnNext();
             break;
         case TokenType::NAME:
+            curr_->name = GetTokenName();
+            TurnNext();
             break;
+
+        default:
+        break;
     }
 }
 
 inline void AST::TurnNext() {
+    #ifdef TEST__DUMP
+    TEST_StatusDump();
+    #endif
     curr_->next = std::make_shared<Pair>();
     curr_ = curr_->next;
 }
 
 inline void AST::TurnDown() {
+    #ifdef TEST__DUMP
+    TEST_StatusDump();
+    #endif
     curr_->child = std::make_shared<Pair>();
     curr_ = curr_->child;
+}
+
+void AST::TEST_StatusDump() {
+    std::cout << "type " << static_cast<int>(curr_->type) << std::endl;
+    std::cout << "number " << curr_->number << std::endl;
+    std::cout << "name " << curr_->name << std::endl;
+    std::cout << "child " << curr_->child << std::endl;
+    std::cout << "next " << curr_->next << std::endl << std::endl;
 }
