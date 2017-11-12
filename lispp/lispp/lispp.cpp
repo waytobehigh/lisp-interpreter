@@ -77,8 +77,11 @@ int64_t Tokenizer::GetTokenNumber() {
 
 bool Tokenizer::SetNumber(const std::string &token) {
     try {
-        size_t* processed = nullptr;
-        std::stoll(token, processed, 10);
+        size_t processed = 0;
+        std::stoll(token, &processed, 10);
+        if (processed != token.size()) {
+            return false;
+        }
     } catch (const std::invalid_argument& exc) {
         return false;
     } catch (const std::out_of_range& exc) {

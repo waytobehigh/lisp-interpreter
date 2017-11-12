@@ -20,5 +20,5 @@ add_executable(test_lispp
   test/test_integer.cpp
   test/test_lambda.cpp
   test/test_list.cpp
-  test/test_symbol.cpp
-  ../commons/catch_main.cpp)
+  test/test_symbol.cpp)
+#  ../commons/catch_main.cpp

@@ -60,7 +60,7 @@ private:
             //  Logic
             "not",
             "#t",
-            "#f"
+            "#f",
 
             //  Integer math
             "+",

@@ -173,6 +173,27 @@
 		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/main.cpp">
 			<Option target="lispp"/>
 		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_boolean.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_control_flow.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_eval.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_integer.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_lambda.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_list.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
+		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/test/test_symbol.cpp">
+			<Option target="test_lispp"/>
+		</Unit>
 		<Unit filename="/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

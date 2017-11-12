@@ -203,6 +203,195 @@ lispp/main.cpp.s:
 	$(MAKE) -f CMakeFiles/lispp.dir/build.make CMakeFiles/lispp.dir/lispp/main.cpp.s
 .PHONY : lispp/main.cpp.s
 
+test/test_boolean.o: test/test_boolean.cpp.o
+
+.PHONY : test/test_boolean.o
+
+# target to build an object file
+test/test_boolean.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_boolean.cpp.o
+.PHONY : test/test_boolean.cpp.o
+
+test/test_boolean.i: test/test_boolean.cpp.i
+
+.PHONY : test/test_boolean.i
+
+# target to preprocess a source file
+test/test_boolean.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_boolean.cpp.i
+.PHONY : test/test_boolean.cpp.i
+
+test/test_boolean.s: test/test_boolean.cpp.s
+
+.PHONY : test/test_boolean.s
+
+# target to generate assembly for a file
+test/test_boolean.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_boolean.cpp.s
+.PHONY : test/test_boolean.cpp.s
+
+test/test_control_flow.o: test/test_control_flow.cpp.o
+
+.PHONY : test/test_control_flow.o
+
+# target to build an object file
+test/test_control_flow.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_control_flow.cpp.o
+.PHONY : test/test_control_flow.cpp.o
+
+test/test_control_flow.i: test/test_control_flow.cpp.i
+
+.PHONY : test/test_control_flow.i
+
+# target to preprocess a source file
+test/test_control_flow.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_control_flow.cpp.i
+.PHONY : test/test_control_flow.cpp.i
+
+test/test_control_flow.s: test/test_control_flow.cpp.s
+
+.PHONY : test/test_control_flow.s
+
+# target to generate assembly for a file
+test/test_control_flow.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_control_flow.cpp.s
+.PHONY : test/test_control_flow.cpp.s
+
+test/test_eval.o: test/test_eval.cpp.o
+
+.PHONY : test/test_eval.o
+
+# target to build an object file
+test/test_eval.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_eval.cpp.o
+.PHONY : test/test_eval.cpp.o
+
+test/test_eval.i: test/test_eval.cpp.i
+
+.PHONY : test/test_eval.i
+
+# target to preprocess a source file
+test/test_eval.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_eval.cpp.i
+.PHONY : test/test_eval.cpp.i
+
+test/test_eval.s: test/test_eval.cpp.s
+
+.PHONY : test/test_eval.s
+
+# target to generate assembly for a file
+test/test_eval.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_eval.cpp.s
+.PHONY : test/test_eval.cpp.s
+
+test/test_integer.o: test/test_integer.cpp.o
+
+.PHONY : test/test_integer.o
+
+# target to build an object file
+test/test_integer.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_integer.cpp.o
+.PHONY : test/test_integer.cpp.o
+
+test/test_integer.i: test/test_integer.cpp.i
+
+.PHONY : test/test_integer.i
+
+# target to preprocess a source file
+test/test_integer.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_integer.cpp.i
+.PHONY : test/test_integer.cpp.i
+
+test/test_integer.s: test/test_integer.cpp.s
+
+.PHONY : test/test_integer.s
+
+# target to generate assembly for a file
+test/test_integer.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_integer.cpp.s
+.PHONY : test/test_integer.cpp.s
+
+test/test_lambda.o: test/test_lambda.cpp.o
+
+.PHONY : test/test_lambda.o
+
+# target to build an object file
+test/test_lambda.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_lambda.cpp.o
+.PHONY : test/test_lambda.cpp.o
+
+test/test_lambda.i: test/test_lambda.cpp.i
+
+.PHONY : test/test_lambda.i
+
+# target to preprocess a source file
+test/test_lambda.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_lambda.cpp.i
+.PHONY : test/test_lambda.cpp.i
+
+test/test_lambda.s: test/test_lambda.cpp.s
+
+.PHONY : test/test_lambda.s
+
+# target to generate assembly for a file
+test/test_lambda.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_lambda.cpp.s
+.PHONY : test/test_lambda.cpp.s
+
+test/test_list.o: test/test_list.cpp.o
+
+.PHONY : test/test_list.o
+
+# target to build an object file
+test/test_list.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_list.cpp.o
+.PHONY : test/test_list.cpp.o
+
+test/test_list.i: test/test_list.cpp.i
+
+.PHONY : test/test_list.i
+
+# target to preprocess a source file
+test/test_list.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_list.cpp.i
+.PHONY : test/test_list.cpp.i
+
+test/test_list.s: test/test_list.cpp.s
+
+.PHONY : test/test_list.s
+
+# target to generate assembly for a file
+test/test_list.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_list.cpp.s
+.PHONY : test/test_list.cpp.s
+
+test/test_symbol.o: test/test_symbol.cpp.o
+
+.PHONY : test/test_symbol.o
+
+# target to build an object file
+test/test_symbol.cpp.o:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_symbol.cpp.o
+.PHONY : test/test_symbol.cpp.o
+
+test/test_symbol.i: test/test_symbol.cpp.i
+
+.PHONY : test/test_symbol.i
+
+# target to preprocess a source file
+test/test_symbol.cpp.i:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_symbol.cpp.i
+.PHONY : test/test_symbol.cpp.i
+
+test/test_symbol.s: test/test_symbol.cpp.s
+
+.PHONY : test/test_symbol.s
+
+# target to generate assembly for a file
+test/test_symbol.cpp.s:
+	$(MAKE) -f CMakeFiles/test_lispp.dir/build.make CMakeFiles/test_lispp.dir/test/test_symbol.cpp.s
+.PHONY : test/test_symbol.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -220,6 +409,27 @@ help:
 	@echo "... lispp/main.o"
 	@echo "... lispp/main.i"
 	@echo "... lispp/main.s"
+	@echo "... test/test_boolean.o"
+	@echo "... test/test_boolean.i"
+	@echo "... test/test_boolean.s"
+	@echo "... test/test_control_flow.o"
+	@echo "... test/test_control_flow.i"
+	@echo "... test/test_control_flow.s"
+	@echo "... test/test_eval.o"
+	@echo "... test/test_eval.i"
+	@echo "... test/test_eval.s"
+	@echo "... test/test_integer.o"
+	@echo "... test/test_integer.i"
+	@echo "... test/test_integer.s"
+	@echo "... test/test_lambda.o"
+	@echo "... test/test_lambda.i"
+	@echo "... test/test_lambda.s"
+	@echo "... test/test_list.o"
+	@echo "... test/test_list.i"
+	@echo "... test/test_list.s"
+	@echo "... test/test_symbol.o"
+	@echo "... test/test_symbol.i"
+	@echo "... test/test_symbol.s"
 .PHONY : help
 
 
