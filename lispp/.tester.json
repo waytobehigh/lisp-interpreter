@@ -1,0 +1,10 @@
+{
+    "allow_change": [
+        "lispp/*",
+        "test/*",
+        "CMakeLists.txt"
+    ],
+    "tests": "test_lispp",
+    "solutions": "private",
+    "review": true
+}

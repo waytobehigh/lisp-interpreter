@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp
+lispp.h
+/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.h
+exception
+-
+cctype
+-
+cstdio
+-
+iostream
+-
+string
+-
+
+/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.h
+istream
+-
+string
+-
+unordered_set
+-
+
