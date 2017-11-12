@@ -4,12 +4,14 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <memory>
 
 class Tokenizer {
 public:
     explicit Tokenizer(std::istream* input_stream);
 
     enum class TokenType {
+        UNKNOWN,
         NAME,
         NUMBER,
         OPEN_PARENT,
@@ -17,7 +19,6 @@ public:
         PAIR,
         SHARP,
         APOSTROPH,
-        UNKNOWN,
         END_OF_FILE
     };
 
@@ -92,7 +93,11 @@ private:
 struct Pair {
     Pair();
 
-    std::shared_ptr<Pair> value;
+    Tokenizer::TokenType type;
+    int64_t number;
+    std::string name;
+
+    std::shared_ptr<Pair> child;
     std::shared_ptr<Pair> next;
 };
 
@@ -102,28 +107,9 @@ public:
     void InsertLexema();
 
 private:
+    inline void TurnNext();
+    inline void TurnDown();
+
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::vector<std::shared_ptr<Pair> > return_stack_;
-};
-
-class Object {
-    struct ObjectConcept {
-        virtual ~ObjectConcept() {}
-    };
-
-    template< typename T > struct ObjectModel : ObjectConcept {
-        ObjectModel( const T& t )
-                : object( t ) {}
-        
-        virtual ~ObjectModel() {}
-
-    private:
-        T object;
-    };
-
-    std::shared_ptr<ObjectConcept> object;
-
-public:
-    template< typename T > Object( const T& obj )
-            : object(new ObjectModel<T>(obj)) {}
 };

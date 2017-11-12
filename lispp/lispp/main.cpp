@@ -5,10 +5,15 @@
 #include <cstdio>
 
 int main() {
-    std::stringstream string_stream("  (   + 1   (  lambda ( x)(   cdr  ' (100 2)))");
-    Tokenizer tokenizer(&string_stream);
+    std::stringstream string_stream("(1 2)");
+    AST ast(&string_stream);
+    ast.InsertLexema();
+    ast.InsertLexema();
+    ast.InsertLexema();
+    ast.InsertLexema();
 
-    tokenizer.ReadNext();
+    //tokenizer.ReadNext();
+    /*
     while (tokenizer.ShowTokenType() != Tokenizer::TokenType::END_OF_FILE) {
         if (tokenizer.ShowTokenType() == Tokenizer::TokenType::NUMBER) {
             std::cout << tokenizer.GetTokenNumber() << ' ';
@@ -23,6 +28,7 @@ int main() {
         }
         tokenizer.ReadNext();
     }
+    */
 
     return 0;
 }

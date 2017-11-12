@@ -114,7 +114,7 @@ bool Tokenizer::IsName(const std::string& token) {
 }
 
 Pair::Pair()
-        : value(nullptr)
+        : child(nullptr)
         , next(nullptr) {}
 
 AST::AST(std::istream* input_stream)
@@ -126,13 +126,28 @@ void AST::InsertLexema() {
     switch (ShowTokenType()) {
         case TokenType::OPEN_PARENT:
             return_stack_.push_back(curr_);
-            curr_->value = std::make_shared<Pair>();
+            TurnDown();
             break;
         case TokenType::CLOSE_PARENT:
+            curr_ = return_stack_.back();
+            return_stack_.pop_back();
+            TurnNext();
             break;
         case TokenType::NUMBER:
+            curr_->number = GetTokenNumber();
+            TurnNext();
             break;
         case TokenType::NAME:
             break;
     }
+}
+
+inline void AST::TurnNext() {
+    curr_->next = std::make_shared<Pair>();
+    curr_ = curr_->next;
+}
+
+inline void AST::TurnDown() {
+    curr_->child = std::make_shared<Pair>();
+    curr_ = curr_->child;
 }

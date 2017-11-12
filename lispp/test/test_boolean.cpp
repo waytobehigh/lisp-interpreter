@@ -27,9 +27,9 @@ TEST_CASE_METHOD(LispTest, "NotFunctionInvalidCall") {
 
 TEST_CASE_METHOD(LispTest, "AndSyntax") {
     // (and <test>)
-    // The <test> expressions are evaluated from left to right, and the value of the first expression
-    // that evaluates to a false value is returned. Any remaining expressions are not evaluated.
-    // If all the expressions evaluate to true values, the value of the last expression is returned.
+    // The <test> expressions are evaluated from left to right, and the child of the first expression
+    // that evaluates to a false child is returned. Any remaining expressions are not evaluated.
+    // If all the expressions evaluate to true values, the child of the last expression is returned.
     // If there are no expressions then #t is returned.
 
     ExpectEq("(and)", "#t");
@@ -46,9 +46,9 @@ TEST_CASE_METHOD(LispTest, "AndOptimizesArgumentEvaluation") {
 
 TEST_CASE_METHOD(LispTest, "OrSyntax") {
     // (or <test>)
-    // The <test> expressions are evaluated from left to right, and the value of the first expression
-    // that evaluates to a true value is returned. Any remaining expressions are
-    // not evaluated. If all expressions evaluate to false values, the value of the last expression is returned.
+    // The <test> expressions are evaluated from left to right, and the child of the first expression
+    // that evaluates to a true child is returned. Any remaining expressions are
+    // not evaluated. If all expressions evaluate to false values, the child of the last expression is returned.
     // If there are no expressions then #f is returned.
 
     ExpectEq("(or)", "#f");

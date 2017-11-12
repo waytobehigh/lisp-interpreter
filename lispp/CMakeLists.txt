@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(lispp)
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 17)
 
 
 # Add other .cpp files to this library
