@@ -6,13 +6,18 @@
 
 
 int main() {
-    std::stringstream string_stream("(+ 1 2)");
+    std::stringstream string_stream("((((-4))))");
     AST ast(&string_stream);
     ast.InsertLexema();
     ast.InsertLexema();
     ast.InsertLexema();
     ast.InsertLexema();
     ast.InsertLexema();
+    ast.InsertLexema();
+    ast.InsertLexema();
+    ast.InsertLexema();
+
+    std::cout << ast.Evaluate(nullptr) << '\n';
 
     //tokenizer.ReadNext();
     /*

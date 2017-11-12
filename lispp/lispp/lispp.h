@@ -5,6 +5,8 @@
 #include <unordered_set>
 #include <vector>
 #include <memory>
+#include <unordered_map>
+#include <functional>
 
 #define TEST__DUMP
 
@@ -107,12 +109,18 @@ class AST : public Tokenizer {
 public:
     AST(std::istream* input_stream);
     void InsertLexema();
+    int64_t Evaluate(std::shared_ptr<Pair> curr);
 
 private:
     inline void TurnNext();
     inline void TurnDown();
     void TEST_StatusDump();
 
+    int64_t Add(std::shared_ptr<Pair> curr);
+
+
+
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
+    std::shared_ptr<Pair> root_ = curr_;
     std::vector<std::shared_ptr<Pair> > return_stack_;
 };
