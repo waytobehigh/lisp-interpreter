@@ -5,7 +5,7 @@
 #include <cstdio>
 
 int main() {
-    std::stringstream string_stream("(+ 1 (lambda (x)( cdr '(100 2)))");
+    std::stringstream string_stream("  (   + 1   (  lambda ( x)(   cdr  ' (100 2)))");
     Tokenizer tokenizer(&string_stream);
 
     tokenizer.ReadNext();

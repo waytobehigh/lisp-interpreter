@@ -3,6 +3,7 @@
 #include <istream>
 #include <string>
 #include <unordered_set>
+#include <vector>
 
 class Tokenizer {
 public:
@@ -86,4 +87,43 @@ private:
             "list-ref",
             "list-tail",
     };
+};
+
+struct Pair {
+    Pair();
+
+    std::shared_ptr<Pair> value;
+    std::shared_ptr<Pair> next;
+};
+
+class AST : public Tokenizer {
+public:
+    AST(std::istream* input_stream);
+    void InsertLexema();
+
+private:
+    std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
+    std::vector<std::shared_ptr<Pair> > return_stack_;
+};
+
+class Object {
+    struct ObjectConcept {
+        virtual ~ObjectConcept() {}
+    };
+
+    template< typename T > struct ObjectModel : ObjectConcept {
+        ObjectModel( const T& t )
+                : object( t ) {}
+        
+        virtual ~ObjectModel() {}
+
+    private:
+        T object;
+    };
+
+    std::shared_ptr<ObjectConcept> object;
+
+public:
+    template< typename T > Object( const T& obj )
+            : object(new ObjectModel<T>(obj)) {}
 };
