@@ -59,6 +59,8 @@ private:
 
             //  Logic
             "not",
+            "#t",
+            "#f"
 
             //  Integer math
             "+",
