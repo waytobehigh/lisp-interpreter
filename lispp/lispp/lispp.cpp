@@ -175,10 +175,10 @@ void AST::TEST_StatusDump() {
             std::cout << "CLOSE_PARENT => no value" << std::endl;
             break;
         case TokenType::NUMBER:
-            std::cout << "value: " << curr_->value.GetValue<int64_t>() << std::endl;
+            std::cout << "value: " << curr_->value.TakeValue<int64_t>() << std::endl;
             break;
         case TokenType::NAME:
-            std::cout << "value: " << curr_->value.GetValue<std::string>() << std::endl;
+            std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
             break;
 
         default:
@@ -202,15 +202,12 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 
     }
 
-    return curr->value.GetValue<int64_t>();
+    return curr->value.TakeValue<int64_t>();
 }
 
-/* Cannot be implemented with Any::GetValue method
- * To be rewritten...
- */
-/*int64_t Add(std::shared_ptr<Pair> curr) {
+int64_t Add(std::shared_ptr<Pair> curr) {
     if (curr->next != nullptr) {
-        return curr->value + Add(curr->next);
+        return curr->value.TakeValue<int64_t>() + Add(curr->next);
     }
-    return curr->value;
-}*/
+    return curr->value.TakeValue<int64_t>();
+}
