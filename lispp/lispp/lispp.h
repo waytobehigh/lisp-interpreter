@@ -53,7 +53,7 @@ private:
             "set!",
 
             //  Predicates
-            "null?",
+            "null?"
             "pair?",
             "number?",
             "boolean?",
