@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/any.h
+typeinfo
+-
+iostream
+-
+
 /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp
 lispp.h
 /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.h
@@ -35,4 +41,6 @@ unordered_map
 -
 functional
 -
+any.h
+/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/any.h
 
