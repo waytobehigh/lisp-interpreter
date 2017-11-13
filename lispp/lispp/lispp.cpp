@@ -188,3 +188,26 @@ void AST::TEST_StatusDump() {
     std::cout << "child " << curr_->child << std::endl;
     std::cout << "next " << curr_->next << std::endl << std::endl;
 }
+
+int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
+    if (curr == nullptr) {
+        return Evaluate(root_);
+    }
+
+    if (curr->child != nullptr) {
+        curr->number = Evaluate(curr->child);
+    }
+
+    if (!curr->name.empty()) {
+
+    }
+
+    return curr->number;
+}
+
+int64_t Add(std::shared_ptr<Pair> curr) {
+    if (curr->next != nullptr) {
+        return curr->number + Add(curr->next);
+    }
+    return curr->number;
+}
