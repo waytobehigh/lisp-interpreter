@@ -5,8 +5,12 @@
 #include <unordered_set>
 #include <vector>
 #include <memory>
+
 #include <unordered_map>
 #include <functional>
+
+#include "any.h"
+
 
 #define TEST__DUMP
 
@@ -98,8 +102,7 @@ struct Pair {
     Pair();
 
     Tokenizer::TokenType type;
-    int64_t number;
-    std::string name;
+    Any value;
 
     std::shared_ptr<Pair> child;
     std::shared_ptr<Pair> next;
