@@ -136,11 +136,11 @@ void AST::InsertLexema() {
             TurnNext();
             break;
         case TokenType::NUMBER:
-            curr_->number = GetTokenNumber();
+            curr_->value = GetTokenNumber();
             TurnNext();
             break;
         case TokenType::NAME:
-            curr_->name = GetTokenName();
+            curr_->value = GetTokenName();
             TurnNext();
             break;
 
@@ -167,8 +167,24 @@ inline void AST::TurnDown() {
 
 void AST::TEST_StatusDump() {
     std::cout << "type " << static_cast<int>(curr_->type) << std::endl;
-    std::cout << "number " << curr_->number << std::endl;
-    std::cout << "name " << curr_->name << std::endl;
+    switch (curr_->type) {
+        case TokenType::OPEN_PARENT:
+            std::cout << "OPEN_PARENT => no value" << std::endl;
+            break;
+        case TokenType::CLOSE_PARENT:
+            std::cout << "CLOSE_PARENT => no value" << std::endl;
+            break;
+        case TokenType::NUMBER:
+            std::cout << "value: " << curr_->value.GetValue<int64_t>() << std::endl;
+            break;
+        case TokenType::NAME:
+            std::cout << "value: " << curr_->value.GetValue<std::string>() << std::endl;
+            break;
+
+        default:
+            std::cout << "value: default" << std::endl;
+        break;
+    }
     std::cout << "child " << curr_->child << std::endl;
     std::cout << "next " << curr_->next << std::endl << std::endl;
 }

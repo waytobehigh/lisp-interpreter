@@ -6,13 +6,12 @@
 
 
 int main() {
-    std::stringstream string_stream("(+ 1 2)");
+    std::stringstream string_stream("(+ 1 (* 2 3))");
     AST ast(&string_stream);
-    ast.InsertLexema();
-    ast.InsertLexema();
-    ast.InsertLexema();
-    ast.InsertLexema();
-    ast.InsertLexema();
+    for (int i = 0; i < 9; ++i) {
+        ast.InsertLexema();
+    }
+    
 
     //tokenizer.ReadNext();
     /*
