@@ -127,20 +127,35 @@ void AST::InsertLexema() {
 
     switch (curr_->type) {
         case TokenType::OPEN_PARENT:
+            #ifdef TEST__DUMP
+            TEST_StatusDump();
+            #endif
             return_stack_.push_back(curr_);
             TurnDown();
             break;
+
         case TokenType::CLOSE_PARENT:
+            #ifdef TEST__DUMP
+            TEST_StatusDump();
+            #endif
             curr_ = return_stack_.back();
             return_stack_.pop_back();
             TurnNext();
             break;
+
         case TokenType::NUMBER:
             curr_->value = GetTokenNumber();
+            #ifdef TEST__DUMP
+            TEST_StatusDump();
+            #endif
             TurnNext();
             break;
+
         case TokenType::NAME:
             curr_->value = GetTokenName();
+            #ifdef TEST__DUMP
+            TEST_StatusDump();
+            #endif
             TurnNext();
             break;
 
@@ -150,17 +165,11 @@ void AST::InsertLexema() {
 }
 
 inline void AST::TurnNext() {
-    #ifdef TEST__DUMP
-    TEST_StatusDump();
-    #endif
     curr_->next = std::make_shared<Pair>();
     curr_ = curr_->next;
 }
 
 inline void AST::TurnDown() {
-    #ifdef TEST__DUMP
-    TEST_StatusDump();
-    #endif
     curr_->child = std::make_shared<Pair>();
     curr_ = curr_->child;
 }
