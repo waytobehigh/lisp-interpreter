@@ -195,19 +195,22 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
     }
 
     if (curr->child != nullptr) {
-        curr->number = Evaluate(curr->child);
+        curr->value = Evaluate(curr->child);
     }
 
-    if (!curr->name.empty()) {
+    if (curr->type == TokenType::NAME) {
 
     }
 
-    return curr->number;
+    return curr->value.GetValue<int64_t>();
 }
 
-int64_t Add(std::shared_ptr<Pair> curr) {
+/* Cannot be implemented with Any::GetValue method
+ * To be rewritten...
+ */
+/*int64_t Add(std::shared_ptr<Pair> curr) {
     if (curr->next != nullptr) {
-        return curr->number + Add(curr->next);
+        return curr->value + Add(curr->next);
     }
-    return curr->number;
-}
+    return curr->value;
+}*/
