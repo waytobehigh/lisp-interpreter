@@ -6,7 +6,8 @@
 
 
 int main() {
-    std::stringstream string_stream("(+ 1 (* 2 3))");
+    std::cout << '\n' - 0;
+    std::stringstream string_stream("(+ 12003 (* 2 3))");
     AST ast(&string_stream);
     for (int i = 0; i < 9; ++i) {
         ast.InsertLexema();

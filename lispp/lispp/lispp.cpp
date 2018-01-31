@@ -18,12 +18,12 @@ void Tokenizer::ReadNext() {
 
     char symb;
     *input_stream_ >> symb;
-    std::string token = std::string();
+    auto token = std::string();
     token.push_back(symb);
 
     if (!(symb == '(' || symb == ')')) {
-        char next = input_stream_->peek();
-        while (next && next != ' ' && next != '(' && next != ')' && next != EOF) {
+        auto next = input_stream_->peek();
+        while (next != '\n' && next != ' ' && next != '(' && next != ')' && next != EOF) {
             token.push_back(input_stream_->get());
             next = input_stream_->peek();
         }
