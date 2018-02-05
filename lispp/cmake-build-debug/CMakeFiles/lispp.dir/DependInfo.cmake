@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/main.cpp" "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp.dir/lispp/main.cpp.o"
+  "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/main.cpp" "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp.dir/lispp/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
@@ -14,7 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/DependInfo.cmake"
+  "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/starlight/Documents/GitHub/lisp-interpreter/lispp
+CMAKE_SOURCE_DIR = /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/lispp-lib.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/lispp-lib.dir/flags.make
 
 CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o: CMakeFiles/lispp-lib.dir/flags.make
 CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o: ../lispp/lispp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o -c /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o -c /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp
 
 CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp > CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp > CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.i
 
 CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp -o CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp -o CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.s
 
 CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o.requires:
 
@@ -91,7 +91,7 @@ lispp__lib_EXTERNAL_OBJECTS =
 liblispp-lib.a: CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o
 liblispp-lib.a: CMakeFiles/lispp-lib.dir/build.make
 liblispp-lib.a: CMakeFiles/lispp-lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library liblispp-lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library liblispp-lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/lispp-lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lispp-lib.dir/link.txt --verbose=$(VERBOSE)
 
@@ -109,6 +109,6 @@ CMakeFiles/lispp-lib.dir/clean:
 .PHONY : CMakeFiles/lispp-lib.dir/clean
 
 CMakeFiles/lispp-lib.dir/depend:
-	cd /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/starlight/Documents/GitHub/lisp-interpreter/lispp /Users/starlight/Documents/GitHub/lisp-interpreter/lispp /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug /Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/lispp-lib.dir/depend
 

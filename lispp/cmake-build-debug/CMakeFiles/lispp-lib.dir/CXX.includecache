@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/any.h
+/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/any.h
 typeinfo
 -
 iostream
 -
 
-/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp
+/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp
 lispp.h
-/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.h
+/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.h
 exception
 -
 cctype
@@ -26,7 +26,7 @@ iostream
 string
 -
 
-/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.h
+/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.h
 istream
 -
 string
@@ -42,5 +42,5 @@ unordered_map
 functional
 -
 any.h
-/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/any.h
+/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/any.h
 

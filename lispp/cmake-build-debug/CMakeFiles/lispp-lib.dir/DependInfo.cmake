@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/lispp/lispp.cpp" "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o"
+  "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp" "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

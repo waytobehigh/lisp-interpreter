@@ -105,7 +105,6 @@ struct Pair {
     Tokenizer::TokenType type;
     Any value;
 
-    std::shared_ptr<Pair> child;
     std::shared_ptr<Pair> next;
 };
 

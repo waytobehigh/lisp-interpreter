@@ -1,4 +1,4 @@
-# Install script for directory: /Users/starlight/Documents/GitHub/lisp-interpreter/lispp
+# Install script for directory: /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/starlight/Documents/GitHub/lisp-interpreter/lispp/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

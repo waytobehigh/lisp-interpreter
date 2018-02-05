@@ -118,7 +118,7 @@ bool Tokenizer::IsBuiltin(const std::string &token) {
 }
 
 Pair::Pair()
-        : child(nullptr), next(nullptr) {}
+        : value(std::shared_ptr<Pair>(nullptr)), next(nullptr) {}
 
 AST::AST(std::istream *input_stream)
         : Tokenizer(input_stream) {}
@@ -181,32 +181,38 @@ inline void AST::TurnNext() {
 }
 
 inline void AST::TurnDown() {
-    curr_->child = std::make_shared<Pair>();
-    curr_ = curr_->child;
+    curr_->value = std::make_shared<Pair>();
+    curr_ = curr_->value.TakeValue<std::shared_ptr<Pair>>();
 }
 
 void AST::TEST_StatusDump() {
-    std::cout << "type " << static_cast<int>(curr_->type) << std::endl;
+    std::cout << "type: ";
     switch (curr_->type) {
         case TokenType::OPEN_PARENT:
-            std::cout << "OPEN_PARENT => no value" << std::endl;
+            std::cout << "OPEN_PARENT" << std::endl;
+            std::cout << "no value" << std::endl;
             break;
         case TokenType::CLOSE_PARENT:
-            std::cout << "CLOSE_PARENT => no value" << std::endl;
+            std::cout << "CLOSE_PARENT" << std::endl;
+            std::cout << "no value" << std::endl;
             break;
         case TokenType::NUMBER:
+            std::cout << "NUMBER" << std::endl;
             std::cout << "value: " << curr_->value.TakeValue<int64_t>() << std::endl;
             break;
         case TokenType::NAME:
+            std::cout << "NAME" << std::endl;
             std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
             break;
         case TokenType::BUILTIN:
+            std::cout << "BUILTIN" << std::endl;
             std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
+            break;
         default:
-            std::cout << "value: default" << std::endl;
+            std::cout << "DEFAULT" << std::endl;
+            std::cout << "no value" << std::endl;
             break;
     }
-    std::cout << "child " << curr_->child << std::endl;
     std::cout << "next " << curr_->next << std::endl << std::endl;
 }
 
@@ -215,8 +221,9 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
         return Evaluate(root_);
     }
 
-    if (curr->child != nullptr) {
-        curr->value = Evaluate(curr->child);
+
+    if (curr->type == TokenType::OPEN_PARENT) {
+        curr->value = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
     }
 
     if (curr->type == TokenType::NAME) {
