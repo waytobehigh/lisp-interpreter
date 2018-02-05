@@ -233,6 +233,7 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
                 curr->value = Add(curr);
                 break;
             case 21:
+                curr->value = Sub(curr);
                 break;
             case 22:
                 break;
@@ -267,4 +268,32 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
      */
 
     return sum;
+}
+
+int64_t AST::Sub(std::shared_ptr<Pair> curr) {
+    if (!(curr = curr->next)) {
+        /*ERROR, absence of the next element*/
+        return 0;
+    }
+    
+    int64_t res = 0;
+    if        (curr->type == TokenType::NUMBER) {
+        res = (curr->value).TakeValue<int64_t>();
+    } else if (curr->type == TokenType::OPEN_PARENT) {
+        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+    } else {
+        /*ERROR, unexpeted lexema in Add met*/
+    }  
+
+    while(curr = curr->next) {
+        if        (curr->type == TokenType::NUMBER) {
+            res -= (curr->value).TakeValue<int64_t>();
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        } else {
+            /*ERROR, unexpeted lexema in Add met*/
+        }        
+    }
+
+    return res;
 }
