@@ -253,7 +253,13 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
     int64_t sum = 0;
     while(curr = curr->next) {
-        sum += (curr->value).TakeValue<int64_t>();
+        if        (curr->type == TokenType::NUMBER) {
+            sum += (curr->value).TakeValue<int64_t>();
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            sum += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        } else {
+            /*ERROR, unexpeted lexema in Add met*/
+        }
     }
 
     return sum;
