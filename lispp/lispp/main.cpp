@@ -6,7 +6,7 @@
 
 
 int main() {
-    std::stringstream string_stream("(+ 2 (+ 3 4))");
+    std::stringstream string_stream("(+ 5 (+ 10 20) 5 (+ 60))");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 

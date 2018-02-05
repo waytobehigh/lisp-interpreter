@@ -262,5 +262,9 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
         }
     }
 
+    /* No "bad any cast" met when used this example "(+ 2 (+ 3 4))"
+     * No "bad any cast" whatsoever
+     */
+
     return sum;
 }
