@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-Tokenizer::Tokenizer(std::istream* input_stream)
+Tokenizer::Tokenizer(std::istream *input_stream)
         : input_stream_(input_stream) {}
 
 void Tokenizer::ReadNext() {
@@ -32,10 +32,13 @@ void Tokenizer::ReadNext() {
         return;
     }
 
-    if (SetNumber(token)) {
+    if (IsNumber(token)) {
         size_t *processed = nullptr;
         number_ = std::stoll(token, processed, 10);
         type_ = TokenType::NUMBER;
+    } else if (IsBuiltin(token)) {
+        name_ = token;
+        type_ = TokenType::BUILTIN;
     } else if (IsName(token)) {
         name_ = token;
         type_ = TokenType::NAME;
@@ -46,9 +49,6 @@ void Tokenizer::ReadNext() {
                 break;
             case ')':
                 type_ = TokenType::CLOSE_PARENT;
-                break;
-            case '#':
-                type_ = TokenType::SHARP;
                 break;
             case '.':
                 type_ = TokenType::PAIR;
@@ -67,7 +67,7 @@ Tokenizer::TokenType Tokenizer::ShowTokenType() {
     return type_;
 }
 
-const std::string& Tokenizer::GetTokenName() {
+const std::string &Tokenizer::GetTokenName() {
     return name_;
 }
 
@@ -75,23 +75,23 @@ int64_t Tokenizer::GetTokenNumber() {
     return number_;
 }
 
-bool Tokenizer::SetNumber(const std::string &token) {
+bool Tokenizer::IsNumber(const std::string &token) {
     try {
         size_t processed = 0;
         std::stoll(token, &processed, 10);
         if (processed != token.size()) {
             return false;
         }
-    } catch (const std::invalid_argument& exc) {
+    } catch (const std::invalid_argument &exc) {
         return false;
-    } catch (const std::out_of_range& exc) {
+    } catch (const std::out_of_range &exc) {
         return false;
     }
 
     return true;
 }
 
-bool Tokenizer::IsName(const std::string& token) {
+bool Tokenizer::IsName(const std::string &token) {
     bool return_value = false;
     if (builtins_.find(token) != builtins_.end()) {
         return_value = true;
@@ -113,11 +113,14 @@ bool Tokenizer::IsName(const std::string& token) {
     return return_value;
 }
 
-Pair::Pair()
-        : child(nullptr)
-        , next(nullptr) {}
+bool Tokenizer::IsBuiltin(const std::string &token) {
+    return builtins_.find(token) != builtins_.end();
+}
 
-AST::AST(std::istream* input_stream)
+Pair::Pair()
+        : child(nullptr), next(nullptr) {}
+
+AST::AST(std::istream *input_stream)
         : Tokenizer(input_stream) {}
 
 void AST::InsertLexema() {
@@ -127,17 +130,17 @@ void AST::InsertLexema() {
 
     switch (curr_->type) {
         case TokenType::OPEN_PARENT:
-            #ifdef TEST__DUMP
+#ifdef TEST__DUMP
             TEST_StatusDump();
-            #endif
+#endif
             return_stack_.push_back(curr_);
             TurnDown();
             break;
 
         case TokenType::CLOSE_PARENT:
-            #ifdef TEST__DUMP
+#ifdef TEST__DUMP
             TEST_StatusDump();
-            #endif
+#endif
             curr_ = return_stack_.back();
             return_stack_.pop_back();
             TurnNext();
@@ -145,22 +148,30 @@ void AST::InsertLexema() {
 
         case TokenType::NUMBER:
             curr_->value = GetTokenNumber();
-            #ifdef TEST__DUMP
+#ifdef TEST__DUMP
             TEST_StatusDump();
-            #endif
+#endif
             TurnNext();
             break;
 
         case TokenType::NAME:
             curr_->value = GetTokenName();
-            #ifdef TEST__DUMP
+#ifdef TEST__DUMP
             TEST_StatusDump();
-            #endif
+#endif
+            TurnNext();
+            break;
+
+        case TokenType::BUILTIN:
+            curr_->value = GetTokenName();
+#ifdef TEST__DUMP
+            TEST_StatusDump();
+#endif
             TurnNext();
             break;
 
         default:
-        break;
+            break;
     }
 }
 
@@ -189,10 +200,11 @@ void AST::TEST_StatusDump() {
         case TokenType::NAME:
             std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
             break;
-
+        case TokenType::BUILTIN:
+            std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
         default:
             std::cout << "value: default" << std::endl;
-        break;
+            break;
     }
     std::cout << "child " << curr_->child << std::endl;
     std::cout << "next " << curr_->next << std::endl << std::endl;

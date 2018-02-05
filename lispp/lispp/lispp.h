@@ -22,10 +22,10 @@ public:
         UNKNOWN,
         NAME,
         NUMBER,
+        BUILTIN,
         OPEN_PARENT,
         CLOSE_PARENT,
         PAIR,
-        SHARP,
         APOSTROPH,
         END_OF_FILE
     };
@@ -39,8 +39,9 @@ public:
     int64_t GetTokenNumber();
 
 private:
-    bool SetNumber(const std::string &token);
+    bool IsNumber(const std::string& token);
     bool IsName(const std::string& token);
+    bool IsBuiltin(const std::string &token);
 
     std::istream* input_stream_;
     TokenType type_;
