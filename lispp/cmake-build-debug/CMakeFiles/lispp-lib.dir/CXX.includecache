@@ -15,16 +15,6 @@ iostream
 /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.cpp
 lispp.h
 /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.h
-exception
--
-cctype
--
-cstdio
--
-iostream
--
-string
--
 
 /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.h
 istream

@@ -48,7 +48,7 @@ private:
     int64_t number_;
 
 protected:
-    std::unordered_map<std::string, int> builtins_ = {
+    const std::unordered_map<std::string, int> builtins_ = {
             //  Special forms
             {"if", 1},
             {"quote", 2},
@@ -121,8 +121,6 @@ private:
     void TEST_StatusDump();
 
     int64_t Add(std::shared_ptr<Pair> curr);
-
-
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::shared_ptr<Pair> root_ = curr_;

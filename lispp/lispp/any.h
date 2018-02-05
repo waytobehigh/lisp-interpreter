@@ -11,7 +11,7 @@ struct PlaceHolder {
 
 template <class T>
 struct Holder: public PlaceHolder {
-    Holder(const T& value): held{value} {}
+    Holder(const T& value): held(value) {}
 
     std::unique_ptr<PlaceHolder> Clone() const override {
         return std::make_unique<Holder<T>>(held);

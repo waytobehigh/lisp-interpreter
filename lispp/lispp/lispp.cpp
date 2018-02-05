@@ -1,9 +1,4 @@
 #include "lispp.h"
-#include <exception>
-#include <cctype>
-#include <cstdio>
-#include <iostream>
-#include <string>
 
 Tokenizer::Tokenizer(std::istream *input_stream)
         : input_stream_(input_stream) {}
@@ -233,7 +228,7 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
     }
 
     if (curr->type == TokenType::BUILTIN) {
-        switch (Tokenizer::builtins_[curr->value.TakeValue<std::string>()]) {
+        switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
             case 20:
                 curr->value = Add(curr->next);
                 break;
@@ -246,7 +241,6 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
             default:
                 break;
         }
-
     }
 
     if (curr->type == TokenType::NAME) {
@@ -257,10 +251,8 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
-    if (curr->next != nullptr) {
+    if (curr->next) {
         return curr->value.TakeValue<int64_t>() + Add(curr->next);
     }
     return curr->value.TakeValue<int64_t>();
 }
-
-
