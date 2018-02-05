@@ -230,7 +230,7 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
     if (curr->type == TokenType::BUILTIN) {
         switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
             case 20:
-                curr->value = Add(curr->next);
+                curr->value = Add(curr);
                 break;
             case 21:
                 break;
@@ -251,8 +251,10 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
-    if (curr->next) {
-        return curr->value.TakeValue<int64_t>() + Add(curr->next);
+    int64_t sum = 0;
+    while(curr = curr->next) {
+        sum += (curr->value).TakeValue<int64_t>();
     }
-    return curr->value.TakeValue<int64_t>();
+
+    return sum;
 }
