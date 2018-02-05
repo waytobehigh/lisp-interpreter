@@ -229,15 +229,17 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 
     if (curr->type == TokenType::BUILTIN) {
         switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
-            case 20:
+            case 20: // '+'
                 curr->value = Add(curr);
                 break;
-            case 21:
+            case 21: // '-'
                 curr->value = Sub(curr);
                 break;
-            case 22:
+            case 22: // '*'
+                curr->value = Mul(curr);
                 break;
-            case 23:
+            case 23: // '/'
+                curr->value = Div(curr);
                 break;
             default:
                 break;
@@ -252,22 +254,18 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
-    int64_t sum = 0;
+    int64_t res = 0;
     while(curr = curr->next) {
         if        (curr->type == TokenType::NUMBER) {
-            sum += (curr->value).TakeValue<int64_t>();
+            res += (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            sum += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }
     }
 
-    /* No "bad any cast" met when used this example "(+ 2 (+ 3 4))"
-     * No "bad any cast" whatsoever
-     */
-
-    return sum;
+    return res;
 }
 
 int64_t AST::Sub(std::shared_ptr<Pair> curr) {
@@ -290,6 +288,49 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
             res -= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
             res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        } else {
+            /*ERROR, unexpeted lexema in Add met*/
+        }        
+    }
+
+    return res;
+}
+
+int64_t AST::Mul(std::shared_ptr<Pair> curr) {
+    int64_t res = 1;
+    while(curr = curr->next) {
+        if        (curr->type == TokenType::NUMBER) {
+            res *= (curr->value).TakeValue<int64_t>();
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            res *= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        } else {
+            /*ERROR, unexpeted lexema in Add met*/
+        }
+    }
+
+    return res;
+}
+
+int64_t AST::Div(std::shared_ptr<Pair> curr) {
+    if (!(curr = curr->next)) {
+        /*ERROR, absence of the next element*/
+        return 0;
+    }
+    
+    int64_t res = 1; //due to no error handling
+    if        (curr->type == TokenType::NUMBER) {
+        res = (curr->value).TakeValue<int64_t>();
+    } else if (curr->type == TokenType::OPEN_PARENT) {
+        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+    } else {
+        /*ERROR, unexpeted lexema in Add met*/
+    }  
+
+    while(curr = curr->next) {
+        if        (curr->type == TokenType::NUMBER) {
+            res /= (curr->value).TakeValue<int64_t>();
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            res /= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }        
