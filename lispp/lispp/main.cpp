@@ -6,12 +6,11 @@
 
 
 int main() {
-    std::stringstream string_stream("(#f 12003 (* 2 3))");
+    std::stringstream string_stream("(+ 2 3 4 5)");
     AST ast(&string_stream);
-    for (int i = 0; i < 9; ++i) {
-        ast.InsertLexema();
-    }
-    
+    while (ast.InsertLexema()) {}
+
+    std::cout << ast.Evaluate(nullptr) << std::endl;
 
     //tokenizer.ReadNext();
     /*

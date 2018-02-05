@@ -123,10 +123,14 @@ Pair::Pair()
 AST::AST(std::istream *input_stream)
         : Tokenizer(input_stream) {}
 
-void AST::InsertLexema() {
+std::shared_ptr<Pair> AST::InsertLexema() {
     ReadNext();
 
     curr_->type = ShowTokenType();
+
+    if (curr_->type == TokenType::END_OF_FILE) {
+        return nullptr;
+    }
 
     switch (curr_->type) {
         case TokenType::OPEN_PARENT:
@@ -173,6 +177,8 @@ void AST::InsertLexema() {
         default:
             break;
     }
+
+    return curr_;
 }
 
 inline void AST::TurnNext() {
@@ -226,6 +232,23 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
         curr->value = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
     }
 
+    if (curr->type == TokenType::BUILTIN) {
+        switch (Tokenizer::builtins_[curr->value.TakeValue<std::string>()]) {
+            case 20:
+                curr->value = Add(curr->next);
+                break;
+            case 21:
+                break;
+            case 22:
+                break;
+            case 23:
+                break;
+            default:
+                break;
+        }
+
+    }
+
     if (curr->type == TokenType::NAME) {
 
     }
@@ -233,9 +256,11 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
     return curr->value.TakeValue<int64_t>();
 }
 
-int64_t Add(std::shared_ptr<Pair> curr) {
+int64_t AST::Add(std::shared_ptr<Pair> curr) {
     if (curr->next != nullptr) {
         return curr->value.TakeValue<int64_t>() + Add(curr->next);
     }
     return curr->value.TakeValue<int64_t>();
 }
+
+

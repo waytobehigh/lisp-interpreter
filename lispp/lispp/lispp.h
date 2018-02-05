@@ -2,7 +2,6 @@
 
 #include <istream>
 #include <string>
-#include <unordered_set>
 #include <vector>
 #include <memory>
 
@@ -47,55 +46,57 @@ private:
     TokenType type_;
     std::string name_;
     int64_t number_;
-    const std::unordered_set<std::string> builtins_ = {
+
+protected:
+    std::unordered_map<std::string, int> builtins_ = {
             //  Special forms
-            "if",
-            "quote",
-            "lambda",
-            "and",
-            "or",
-            "define",
-            "set!",
+            {"if", 1},
+            {"quote", 2},
+            {"lambda", 3},
+            {"and", 4},
+            {"or", 5},
+            {"define", 6},
+            {"set!", 7},
 
             //  Predicates
-            "null?"
-            "pair?",
-            "number?",
-            "boolean?",
-            "symbol?",
-            "list?",
-            "eq?",
-            "equal?",
-            "integer-equal?",
+            {"null?", 8},
+            {"pair?", 9},
+            {"number?", 10},
+            {"boolean?", 11},
+            {"symbol?", 12},
+            {"list?", 13},
+            {"eq?", 14},
+            {"equal?", 15},
+            {"integer-equal?", 16},
 
             //  Logic
-            "not",
-            "#t",
-            "#f",
+            {"not", 17},
+            {"#t", 18},
+            {"#f", 19},
 
             //  Integer math
-            "+",
-            "-",
-            "*",
-            "/",
-            "=",
-            ">",
-            "<",
-            ">=",
-            "<=",
-            "min",
-            "max",
-            "abs",
+            {"+", 20},
+            {"-", 21},
+            {"*", 22},
+            {"/", 23},
+            {"=", 24},
+            {">", 25},
+            {"<", 26},
+            {">=", 27},
+            {"<=", 28},
+            {"min", 29},
+            {"max", 30},
+            {"abs", 31},
 
             //  List functions
-            "cons",
-            "car",
-            "cdr",
-            "set-car!",
-            "set-cdr!",
-            "list",
-            "list-ref",
-            "list-tail",
+            {"cons", 32},
+            {"car", 33},
+            {"cdr", 34},
+            {"set-car!", 35},
+            {"set-cdr!", 36},
+            {"list", 37},
+            {"list-ref", 38},
+            {"list-tail", 39},
     };
 };
 
@@ -108,10 +109,10 @@ struct Pair {
     std::shared_ptr<Pair> next;
 };
 
-class AST : public Tokenizer {
+class AST : protected Tokenizer {
 public:
     AST(std::istream* input_stream);
-    void InsertLexema();
+    std::shared_ptr<Pair> InsertLexema();
     int64_t Evaluate(std::shared_ptr<Pair> curr);
 
 private:

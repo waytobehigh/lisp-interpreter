@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/lispp.dir/lispp/main.cpp.o  -o lispp liblispp-lib.a 
+/Library/Developer/CommandLineTools/usr/bin/c++  -v -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/lispp.dir/lispp/main.cpp.o  -o lispp liblispp-lib.a 
