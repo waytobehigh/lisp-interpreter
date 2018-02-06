@@ -190,6 +190,9 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
 //Dependencies for target
+any_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
 lispp-lib_LIB_DEPENDS:STATIC=
 
 //Value Computed by CMake

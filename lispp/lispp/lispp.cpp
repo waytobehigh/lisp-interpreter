@@ -31,6 +31,9 @@ void Tokenizer::ReadNext() {
         size_t *processed = nullptr;
         number_ = std::stoll(token, processed, 10);
         type_ = TokenType::NUMBER;
+    } else if (IsBool(token)) {
+        number_ = bools_.at(token);
+        type_ = TokenType::BOOL;
     } else if (IsBuiltin(token)) {
         name_ = token;
         type_ = TokenType::BUILTIN;
@@ -39,12 +42,6 @@ void Tokenizer::ReadNext() {
         type_ = TokenType::NAME;
     } else {
         switch (symb) {
-            case '(':
-                type_ = TokenType::OPEN_PARENT;
-                break;
-            case ')':
-                type_ = TokenType::CLOSE_PARENT;
-                break;
             case '.':
                 type_ = TokenType::PAIR;
                 break;
@@ -110,6 +107,10 @@ bool Tokenizer::IsName(const std::string &token) {
 
 bool Tokenizer::IsBuiltin(const std::string &token) {
     return builtins_.find(token) != builtins_.end();
+}
+
+bool Tokenizer::IsBool(const std::string &token) {
+    return bools_.find(token) != bools_.end();
 }
 
 Pair::Pair()
@@ -241,6 +242,22 @@ int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
             case 23: // '/'
                 curr->value = Div(curr);
                 break;
+                /*
+                {"=", 24},
+                {">", 25},
+                {"<", 26},
+                {">=", 27},
+                {"<=", 28},
+                {"min", 29},
+                {"max", 30},
+                {"abs", 31},
+                 */
+            case 24: // '='
+
+            case 25: // '>'
+            case 26: // '<'
+            case 27: // '>='
+            case 28: // '<='
             default:
                 break;
         }
@@ -333,7 +350,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
             res /= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
         } else {
             /*ERROR, unexpeted lexema in Add met*/
-        }        
+        }
     }
 
     return res;

@@ -21,6 +21,7 @@ public:
         UNKNOWN,
         NAME,
         NUMBER,
+        BOOL,
         BUILTIN,
         OPEN_PARENT,
         CLOSE_PARENT,
@@ -40,6 +41,7 @@ public:
 private:
     bool IsNumber(const std::string& token);
     bool IsName(const std::string& token);
+    bool IsBool(const std::string &token);
     bool IsBuiltin(const std::string &token);
 
     std::istream* input_stream_;
@@ -48,6 +50,11 @@ private:
     int64_t number_;
 
 protected:
+    const std::unordered_map<std::string, int> bools_ = {
+            {"#f", 0},
+            {"#t", 1}
+    };
+
     const std::unordered_map<std::string, int> builtins_ = {
             //  Special forms
             {"if", 1},
@@ -71,8 +78,6 @@ protected:
 
             //  Logic
             {"not", 17},
-            {"#t", 18},
-            {"#f", 19},
 
             //  Integer math
             {"+", 20},
