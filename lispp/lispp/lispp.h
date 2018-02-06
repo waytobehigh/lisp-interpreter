@@ -20,7 +20,7 @@ public:
     enum class TokenType {
         UNKNOWN,
         NAME,
-        NUMBER,
+        NUM,
         BOOL,
         BUILTIN,
         OPEN_PARENT,
@@ -105,20 +105,20 @@ protected:
     };
 };
 
-struct Pair {
-    Pair();
-
-    Tokenizer::TokenType type;
-    Any value;
-
-    std::shared_ptr<Pair> next;
-};
-
 class AST : protected Tokenizer {
 public:
+    struct Pair {
+        Pair();
+
+        Tokenizer::TokenType type;
+        Any value;
+
+        std::shared_ptr<Pair> next;
+    };
+
     AST(std::istream* input_stream);
     std::shared_ptr<Pair> InsertLexema();
-    int64_t Evaluate(std::shared_ptr<Pair> curr);
+    const Pair& Evaluate(std::shared_ptr<Pair> curr);
 
 private:
     inline void TurnNext();

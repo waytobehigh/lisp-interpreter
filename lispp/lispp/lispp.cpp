@@ -1,3 +1,4 @@
+#include <tic.h>
 #include "lispp.h"
 
 Tokenizer::Tokenizer(std::istream *input_stream)
@@ -30,7 +31,7 @@ void Tokenizer::ReadNext() {
     if (IsNumber(token)) {
         size_t *processed = nullptr;
         number_ = std::stoll(token, processed, 10);
-        type_ = TokenType::NUMBER;
+        type_ = TokenType::NUM;
     } else if (IsBool(token)) {
         number_ = bools_.at(token);
         type_ = TokenType::BOOL;
@@ -113,13 +114,13 @@ bool Tokenizer::IsBool(const std::string &token) {
     return bools_.find(token) != bools_.end();
 }
 
-Pair::Pair()
+AST::Pair::Pair()
         : value(std::shared_ptr<Pair>(nullptr)), next(nullptr) {}
 
 AST::AST(std::istream *input_stream)
         : Tokenizer(input_stream) {}
 
-std::shared_ptr<Pair> AST::InsertLexema() {
+std::shared_ptr<AST::Pair> AST::InsertLexema() {
     ReadNext();
 
     curr_->type = ShowTokenType();
@@ -146,7 +147,7 @@ std::shared_ptr<Pair> AST::InsertLexema() {
             TurnNext();
             break;
 
-        case TokenType::NUMBER:
+        case TokenType::NUM:
             curr_->value = GetTokenNumber();
 #ifdef TEST__DUMP
             TEST_StatusDump();
@@ -206,8 +207,8 @@ void AST::TEST_StatusDump() {
             std::cout << "CLOSE_PARENT" << std::endl;
             std::cout << "no value" << std::endl;
             break;
-        case TokenType::NUMBER:
-            std::cout << "NUMBER" << std::endl;
+        case TokenType::NUM:
+            std::cout << "NUM" << std::endl;
             std::cout << "value: " << curr_->value.TakeValue<int64_t>() << std::endl;
             break;
         case TokenType::NAME:
@@ -230,65 +231,69 @@ void AST::TEST_StatusDump() {
     std::cout << "next " << curr_->next << std::endl << std::endl;
 }
 
-int64_t AST::Evaluate(std::shared_ptr<Pair> curr) {
+const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
     if (curr == nullptr) {
         return Evaluate(root_);
     }
 
+    switch (curr->type) {
+        case TokenType::OPEN_PARENT:
+            curr->value = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            break;
+        case TokenType::BUILTIN:
+            switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
+                case 20: // '+'
+                    curr->value = Add(curr);
+                    curr->type = TokenType::NUM;
+                    break;
+                case 21: // '-'
+                    curr->value = Sub(curr);
+                    curr->type = TokenType::NUM;
+                    break;
+                case 22: // '*'
+                    curr->value = Mul(curr);
+                    curr->type = TokenType::NUM;
+                    break;
+                case 23: // '/'
+                    curr->value = Div(curr);
+                    curr->type = TokenType::NUM;
+                    break;
+                    /*
+                    {"=", 24},
+                    {">", 25},
+                    {"<", 26},
+                    {">=", 27},
+                    {"<=", 28},
+                    {"min", 29},
+                    {"max", 30},
+                    {"abs", 31},
+                     */
+                case 24: // '='
 
-    if (curr->type == TokenType::OPEN_PARENT) {
-        curr->value = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+                case 25: // '>'
+                case 26: // '<'
+                case 27: // '>='
+                case 28: // '<='
+                default:
+                    break;
+            }
+            break;
+        case TokenType::NAME:
+            break;
+        default:
+            break;
     }
 
-    if (curr->type == TokenType::BUILTIN) {
-        switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
-            case 20: // '+'
-                curr->value = Add(curr);
-                break;
-            case 21: // '-'
-                curr->value = Sub(curr);
-                break;
-            case 22: // '*'
-                curr->value = Mul(curr);
-                break;
-            case 23: // '/'
-                curr->value = Div(curr);
-                break;
-                /*
-                {"=", 24},
-                {">", 25},
-                {"<", 26},
-                {">=", 27},
-                {"<=", 28},
-                {"min", 29},
-                {"max", 30},
-                {"abs", 31},
-                 */
-            case 24: // '='
-
-            case 25: // '>'
-            case 26: // '<'
-            case 27: // '>='
-            case 28: // '<='
-            default:
-                break;
-        }
-    }
-
-    if (curr->type == TokenType::NAME) {
-
-    }
-
-    return curr->value.TakeValue<int64_t>();
+    return *root_;
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
     int64_t res = 0;
     while(curr = curr->next) {
-        if        (curr->type == TokenType::NUMBER) {
+        if        (curr->type == TokenType::NUM) {
             res += (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }
@@ -304,19 +309,19 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
     }
     
     int64_t res = 0;
-    if        (curr->type == TokenType::NUMBER) {
+    if        (curr->type == TokenType::NUM) {
         res = (curr->value).TakeValue<int64_t>();
     } else if (curr->type == TokenType::OPEN_PARENT) {
-        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
     } else {
         /*ERROR, unexpeted lexema in Add met*/
     }  
 
     while(curr = curr->next) {
-        if        (curr->type == TokenType::NUMBER) {
+        if        (curr->type == TokenType::NUM) {
             res -= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }        
@@ -328,10 +333,10 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
 int64_t AST::Mul(std::shared_ptr<Pair> curr) {
     int64_t res = 1;
     while(curr = curr->next) {
-        if        (curr->type == TokenType::NUMBER) {
+        if        (curr->type == TokenType::NUM) {
             res *= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res *= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res *= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }
@@ -347,19 +352,19 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
     }
     
     int64_t res = 1; //due to no error handling
-    if        (curr->type == TokenType::NUMBER) {
+    if        (curr->type == TokenType::NUM) {
         res = (curr->value).TakeValue<int64_t>();
     } else if (curr->type == TokenType::OPEN_PARENT) {
-        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
     } else {
         /*ERROR, unexpeted lexema in Add met*/
-    }  
+    }
 
     while(curr = curr->next) {
-        if        (curr->type == TokenType::NUMBER) {
+        if        (curr->type == TokenType::NUM) {
             res /= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res /= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res /= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
         } else {
             /*ERROR, unexpeted lexema in Add met*/
         }

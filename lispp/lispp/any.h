@@ -57,7 +57,7 @@ public:
     }
 
     template<class T>
-    T& TakeValue() {
+    T& TakeValue() const {
         if (typeid(T) != content_->TypeInfo()) {
             std::cout << "Wrong any cast!\n";
         }
