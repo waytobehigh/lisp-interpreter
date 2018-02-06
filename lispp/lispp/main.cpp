@@ -6,7 +6,7 @@
 
 
 int main() {
-    std::stringstream string_stream("(+ 1 2 3)");
+    std::stringstream string_stream("#t");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 

@@ -162,6 +162,14 @@ std::shared_ptr<Pair> AST::InsertLexema() {
             TurnNext();
             break;
 
+        case TokenType::BOOL:
+            curr_->value = GetTokenNumber();
+#ifdef TEST__DUMP
+            TEST_StatusDump();
+#endif
+            TurnNext();
+            break;
+
         case TokenType::BUILTIN:
             curr_->value = GetTokenName();
 #ifdef TEST__DUMP
@@ -209,6 +217,10 @@ void AST::TEST_StatusDump() {
         case TokenType::BUILTIN:
             std::cout << "BUILTIN" << std::endl;
             std::cout << "value: " << curr_->value.TakeValue<std::string>() << std::endl;
+            break;
+        case TokenType::BOOL:
+            std::cout << "BOOL" << std::endl;
+            std::cout << "value: " << curr_->value.TakeValue<int64_t>() << std::endl;
             break;
         default:
             std::cout << "DEFAULT" << std::endl;
