@@ -391,10 +391,10 @@ int64_t AST::Abs(std::shared_ptr<Pair> curr) {
         return 0;
     }
 
-    /*if (curr->next != nullptr) {
+    if (curr->next->type != TokenType::CLOSE_PARENT) {
         // ERROR, too many arguments
         return 0;
-    }*/
+    }
 
     if (curr->type != TokenType::NUM) {
         curr->value = Evaluate(curr).value.TakeValue<int64_t>();

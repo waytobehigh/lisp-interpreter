@@ -18,16 +18,16 @@ public:
     explicit Tokenizer(std::istream* input_stream);
 
     enum class TokenType {
-        UNKNOWN,
-        NAME,
-        NUM,
-        BOOL,
-        BUILTIN,
-        OPEN_PARENT,
-        CLOSE_PARENT,
-        PAIR,
-        APOSTROPH,
-        END_OF_FILE
+        UNKNOWN, // 0
+        NAME, // 1
+        NUM, // 2
+        BOOL, // 3
+        BUILTIN, // 4
+        OPEN_PARENT, // 5
+        CLOSE_PARENT, // 6
+        PAIR, // 7
+        APOSTROPH, // 8
+        END_OF_FILE // 9
     };
 
     void ReadNext();
