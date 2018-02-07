@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <functional>
 
+#include <climits>
+
 #include "any.h"
 
 

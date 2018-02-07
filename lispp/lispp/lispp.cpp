@@ -304,9 +304,10 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
         if         (curr->type == TokenType::NUM) {
             res += (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res += evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpeted lexema in Add met
+            // ERROR, unexpected lexema in Add met
         }
     }
 
@@ -316,7 +317,6 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
 int64_t AST::Sub(std::shared_ptr<Pair> curr) {
     if (!(curr = curr->next)) {
         // ERROR, absence of the next element
-        throw std::runtime_error{"Oh, hi Mark)"};
         return 0;
     }
     
@@ -324,18 +324,20 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
     if         (curr->type == TokenType::NUM) {
         res += (curr->value).TakeValue<int64_t>();
     } else if (curr->type == TokenType::OPEN_PARENT) {
-        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+        auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        res = evaluated.value.TakeValue<int64_t>();
     } else {
-        // ERROR, unexpeted lexema in Add met
+        // ERROR, unexpected lexema in Add met
     }  
 
     while (curr = curr->next) {
         if         (curr->type == TokenType::NUM) {
             res -= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res -= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpeted lexema in Add met
+            // ERROR, unexpected lexema in Add met
         }        
     }
 
@@ -348,9 +350,10 @@ int64_t AST::Mul(std::shared_ptr<Pair> curr) {
         if         (curr->type == TokenType::NUM) {
             res *= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res *= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res *= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpeted lexema in Add met
+            // ERROR, unexpected lexema in Add met
         }
     }
 
@@ -367,18 +370,20 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
     if        (curr->type == TokenType::NUM) {
         res = (curr->value).TakeValue<int64_t>();
     } else if (curr->type == TokenType::OPEN_PARENT) {
-        res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+        auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        res = evaluated.value.TakeValue<int64_t>();
     } else {
-        // ERROR, unexpeted lexema in Add met
+        // ERROR, unexpected lexema in Add met
     }
 
     while (curr = curr->next) {
         if        (curr->type == TokenType::NUM) {
             res /= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
-            res /= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res /= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpeted lexema in Add met
+            // ERROR, unexpected lexema in Add met
         }
     }
 
@@ -406,17 +411,53 @@ int64_t AST::Abs(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Min(std::shared_ptr<Pair> curr) {
+    int64_t res = INT64_MAX;
+    while (curr = curr->next) {
+        if        (curr->type == TokenType::NUM) {
+            res = std::min(res, (curr->value).TakeValue<int64_t>());
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res = std::min(res, evaluated.value.TakeValue<int64_t>());
+        } else {
+            // ERROR, unexpected lexema in Min met
+        }
+    }
+
+    return res;
+}
+
+int64_t AST::Max(std::shared_ptr<Pair> curr) {
+    int64_t res = INT64_MIN;
+    while (curr = curr->next) {
+        if        (curr->type == TokenType::NUM) {
+            res = std::max(res, (curr->value).TakeValue<int64_t>());
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            res = std::max(res, evaluated.value.TakeValue<int64_t>());
+        } else {
+            // ERROR, unexpected lexema in Max met
+        }
+    }
+
+    return res;
+}
+
+bool AST::EQ(std::shared_ptr<Pair> curr) {
 
 }
 
-int64_t AST::Max(std::shared_ptr<Pair> curr) {}
+bool AST::GT(std::shared_ptr<Pair> curr) {
 
-bool AST::EQ(std::shared_ptr<Pair> curr) {}
+}
 
-bool AST::GT(std::shared_ptr<Pair> curr) {}
+bool AST::LT(std::shared_ptr<Pair> curr) {
 
-bool AST::LT(std::shared_ptr<Pair> curr) {}
+}
 
-bool AST::GEQ(std::shared_ptr<Pair> curr) {}
+bool AST::GEQ(std::shared_ptr<Pair> curr) {
 
-bool AST::LEQ(std::shared_ptr<Pair> curr) {}
+}
+
+bool AST::LEQ(std::shared_ptr<Pair> curr) {
+
+}

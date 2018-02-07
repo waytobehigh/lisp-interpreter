@@ -3,7 +3,7 @@
 #include <cstdio>
 #include "lispp.h"
 
-const std::string& PrintResult(const AST::Pair& result) {
+void PrintResult(const AST::Pair& result) {
     switch (result.type) {
         case Tokenizer::TokenType::NUM:
             std::cout << result.value.TakeValue<int64_t>();
@@ -18,7 +18,7 @@ const std::string& PrintResult(const AST::Pair& result) {
 }
 
 int main() {
-    std::stringstream string_stream("(abs 1)");
+    std::stringstream string_stream("(min 1 2)");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 
