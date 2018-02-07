@@ -129,6 +129,15 @@ private:
     int64_t Sub(std::shared_ptr<Pair> curr);
     int64_t Mul(std::shared_ptr<Pair> curr);
     int64_t Div(std::shared_ptr<Pair> curr);
+    int64_t Abs(std::shared_ptr<Pair> curr);
+    int64_t Min(std::shared_ptr<Pair> curr);
+    int64_t Max(std::shared_ptr<Pair> curr);
+
+    bool EQ(std::shared_ptr<Pair> curr);
+    bool GT(std::shared_ptr<Pair> curr);
+    bool LT(std::shared_ptr<Pair> curr);
+    bool GEQ(std::shared_ptr<Pair> curr);
+    bool LEQ(std::shared_ptr<Pair> curr);
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::shared_ptr<Pair> root_ = curr_;

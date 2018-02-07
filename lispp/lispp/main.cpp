@@ -1,11 +1,9 @@
 #include <iostream>
-// #include <histedit.h>
 #include <sstream>
 #include <cstdio>
 #include "lispp.h"
 
 const std::string& PrintResult(const AST::Pair& result) {
-    std::cout << static_cast<int>(result.type) << std::endl;
     switch (result.type) {
         case Tokenizer::TokenType::NUM:
             std::cout << result.value.TakeValue<int64_t>();
@@ -20,7 +18,7 @@ const std::string& PrintResult(const AST::Pair& result) {
 }
 
 int main() {
-    std::stringstream string_stream("(- 1 2 (+ 3 2 4) (* (* 2 5) 10))");
+    std::stringstream string_stream("abs 1");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 
