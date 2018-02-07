@@ -18,7 +18,7 @@ void PrintResult(const AST::Pair& result) {
 }
 
 int main() {
-    std::stringstream string_stream("(min 1 2)");
+    std::stringstream string_stream("(+ 2 3 1)");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 

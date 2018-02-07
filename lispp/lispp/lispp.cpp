@@ -300,7 +300,7 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
     int64_t res = 0;
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if         (curr->type == TokenType::NUM) {
             res += (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
@@ -330,7 +330,7 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
         // ERROR, unexpected lexema in Add met
     }  
 
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if         (curr->type == TokenType::NUM) {
             res -= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
@@ -346,7 +346,7 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Mul(std::shared_ptr<Pair> curr) {
     int64_t res = 1;
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if         (curr->type == TokenType::NUM) {
             res *= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
@@ -376,7 +376,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
         // ERROR, unexpected lexema in Add met
     }
 
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if        (curr->type == TokenType::NUM) {
             res /= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
@@ -412,7 +412,7 @@ int64_t AST::Abs(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Min(std::shared_ptr<Pair> curr) {
     int64_t res = INT64_MAX;
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if        (curr->type == TokenType::NUM) {
             res = std::min(res, (curr->value).TakeValue<int64_t>());
         } else if (curr->type == TokenType::OPEN_PARENT) {
@@ -428,7 +428,7 @@ int64_t AST::Min(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Max(std::shared_ptr<Pair> curr) {
     int64_t res = INT64_MIN;
-    while (curr = curr->next) {
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if        (curr->type == TokenType::NUM) {
             res = std::max(res, (curr->value).TakeValue<int64_t>());
         } else if (curr->type == TokenType::OPEN_PARENT) {
