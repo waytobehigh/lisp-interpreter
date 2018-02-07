@@ -327,7 +327,7 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
         auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
         res = evaluated.value.TakeValue<int64_t>();
     } else {
-        // ERROR, unexpected lexema in Add met
+        // ERROR, unexpected lexema in Sub met
     }  
 
     while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
@@ -337,7 +337,7 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
             auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
             res -= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpected lexema in Add met
+            // ERROR, unexpected lexema in Sub met
         }        
     }
 
@@ -353,7 +353,7 @@ int64_t AST::Mul(std::shared_ptr<Pair> curr) {
             auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
             res *= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpected lexema in Add met
+            // ERROR, unexpected lexema in Mul met
         }
     }
 
@@ -373,7 +373,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
         auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
         res = evaluated.value.TakeValue<int64_t>();
     } else {
-        // ERROR, unexpected lexema in Add met
+        // ERROR, unexpected lexema in Div met
     }
 
     while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
@@ -383,7 +383,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
             auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
             res /= evaluated.value.TakeValue<int64_t>();
         } else {
-            // ERROR, unexpected lexema in Add met
+            // ERROR, unexpected lexema in Div met
         }
     }
 
