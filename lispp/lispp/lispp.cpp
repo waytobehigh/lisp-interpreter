@@ -237,8 +237,11 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
     }
 
     switch (curr->type) {
-        case TokenType::OPEN_PARENT:
-            curr->value = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        case TokenType::OPEN_PARENT: {
+            auto res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            curr->value = res.value;
+            curr->type = res.type;
+        }
             break;
         case TokenType::BUILTIN:
             switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
@@ -269,11 +272,15 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     {"abs", 31},
                      */
                 case 24: // '='
-
+                    curr->type = TokenType::BOOL;
                 case 25: // '>'
+                    curr->type = TokenType::BOOL;
                 case 26: // '<'
+                    curr->type = TokenType::BOOL;
                 case 27: // '>='
+                    curr->type = TokenType::BOOL;
                 case 28: // '<='
+                    curr->type = TokenType::BOOL;
                 default:
                     break;
             }
@@ -289,8 +296,8 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
     int64_t res = 0;
-    while(curr = curr->next) {
-        if        (curr->type == TokenType::NUM) {
+    while (curr = curr->next) {
+        if         (curr->type == TokenType::NUM) {
             res += (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
             res += Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
@@ -305,20 +312,21 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
 int64_t AST::Sub(std::shared_ptr<Pair> curr) {
     if (!(curr = curr->next)) {
         /*ERROR, absence of the next element*/
+        throw std::runtime_error{"Oh, hi Mark)"};
         return 0;
     }
     
     int64_t res = 0;
-    if        (curr->type == TokenType::NUM) {
-        res = (curr->value).TakeValue<int64_t>();
+    if         (curr->type == TokenType::NUM) {
+        res += (curr->value).TakeValue<int64_t>();
     } else if (curr->type == TokenType::OPEN_PARENT) {
         res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
     } else {
         /*ERROR, unexpeted lexema in Add met*/
     }  
 
-    while(curr = curr->next) {
-        if        (curr->type == TokenType::NUM) {
+    while (curr = curr->next) {
+        if         (curr->type == TokenType::NUM) {
             res -= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
             res -= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
@@ -332,8 +340,8 @@ int64_t AST::Sub(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Mul(std::shared_ptr<Pair> curr) {
     int64_t res = 1;
-    while(curr = curr->next) {
-        if        (curr->type == TokenType::NUM) {
+    while (curr = curr->next) {
+        if         (curr->type == TokenType::NUM) {
             res *= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
             res *= Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>()).value.TakeValue<int64_t>();
@@ -360,7 +368,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
         /*ERROR, unexpeted lexema in Add met*/
     }
 
-    while(curr = curr->next) {
+    while (curr = curr->next) {
         if        (curr->type == TokenType::NUM) {
             res /= (curr->value).TakeValue<int64_t>();
         } else if (curr->type == TokenType::OPEN_PARENT) {
