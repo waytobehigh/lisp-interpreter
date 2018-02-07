@@ -75,7 +75,26 @@ int main() {
     ExpectEq("(min 1 2)", "1");
     ExpectEq("(min 1 2 3 4 5)", "1");
 
-    ExpectEq("(= 1 2)", "#f");
+    ExpectEq("(= 1 1)", "#t");
+    ExpectEq("(= 1 4)", "#f");
+    ExpectEq("(= (+ 10 5) (* 3 5))", "#t");
+    ExpectEq("(= (min 12 292 -7) (max -254 -23 -7))", "#t");
+    
+    ExpectEq("(> 3 2 1)", "#t");
+    ExpectEq("(> 3 63 0)", "#f");
+    ExpectEq("(> 3 (min 3 4 2) 1)", "#t");
+
+    ExpectEq("(>= 3 2 1)", "#t");
+    ExpectEq("(>= 3 3 1)", "#t");
+    ExpectEq("(>= 3 11 1)", "#f");
+
+    ExpectEq("(< 1 2 3)", "#t");
+    ExpectEq("(< 1 1 3)", "#f");
+
+    ExpectEq("(<= 1 2 3)", "#t");
+    ExpectEq("(<= 1 1 3)", "#t");
+    ExpectEq("(<= 1 0 3)", "#f");
+
     
     /* Predicates */
 
