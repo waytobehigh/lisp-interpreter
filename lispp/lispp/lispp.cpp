@@ -291,7 +291,7 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
             break;
     }
 
-    return *root_;
+    return *curr;
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {

@@ -12,6 +12,7 @@ const std::string& PrintResult(const AST::Pair& result) {
             break;
         case Tokenizer::TokenType::BOOL:
             std::cout << ((result.value.TakeValue<int64_t>()) ? "#t" : "#f");
+            break;
         default:
             break;
     }
@@ -19,7 +20,7 @@ const std::string& PrintResult(const AST::Pair& result) {
 }
 
 int main() {
-    std::stringstream string_stream("(+ 1 2)");
+    std::stringstream string_stream("(- 1 2 (+ 3 2 4) (* (* 2 5) 10))");
     AST ast(&string_stream);
     while (ast.InsertLexema()) {}
 
