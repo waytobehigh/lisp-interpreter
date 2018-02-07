@@ -461,3 +461,10 @@ bool AST::GEQ(std::shared_ptr<Pair> curr) {
 bool AST::LEQ(std::shared_ptr<Pair> curr) {
 
 }
+
+bool AST::is_null(std::shared_ptr<AST::Pair> curr) {}
+bool AST::is_pair(std::shared_ptr<Pair> curr) {}
+bool AST::is_number(std::shared_ptr<Pair> curr) {}
+bool AST::is_bool(std::shared_ptr<Pair> curr) {}
+bool AST::is_symb(std::shared_ptr<Pair> curr) {}
+bool AST::is_list(std::shared_ptr<Pair> curr) {}
