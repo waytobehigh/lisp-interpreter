@@ -164,7 +164,7 @@ std::shared_ptr<AST::Pair> AST::InsertLexema() {
             break;
 
         case TokenType::BOOL:
-            curr_->value = GetTokenNumber();
+            curr_->value = (GetTokenName() == "#t") ? true : false;
 #ifdef TEST__DUMP
             TEST_StatusDump();
 #endif
