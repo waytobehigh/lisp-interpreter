@@ -451,7 +451,38 @@ int64_t AST::Max(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::EQ(std::shared_ptr<Pair> curr) {
+    if (!curr->next && !curr->next->next) {
+        //ERROR, wrong arguments
+        return false;
+    }
+    
+    int64_t first = 0;
+    if        (curr->type == TokenType::NUM) {
+        first = (curr->value).TakeValue<int64_t>();
+    } else if (curr->type == TokenType::OPEN_PARENT) {
+        auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+        first = evaluated.value.TakeValue<int64_t>();
+    } else {
+        // ERROR, unexpected lexema in Div met
+    }
 
+    int64_t another = 0;
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
+        if (curr->type == TokenType::NUM) {
+            if (first != (curr->value).TakeValue<int64_t>()) {
+                return false;
+            }
+        } else if (curr->type == TokenType::OPEN_PARENT) {
+            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
+            if (first != evaluated.value.TakeValue<int64_t>()) {
+                return false;
+            }
+        } else {
+            // ERROR, unexpected lexema in EQ met
+        }
+    }
+
+    return true;
 }
 
 bool AST::GT(std::shared_ptr<Pair> curr) {

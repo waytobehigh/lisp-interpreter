@@ -55,6 +55,7 @@ int main() {
     ExpectEq("(abs 241)", "241");
 
     ExpectEq("(min 1 2 3 4 5)", "1");
+    ExpectEq("(= 1 2)", "#f");
 
 /*
     Test bool
