@@ -21,7 +21,7 @@ std::string ResToStr(const AST::Pair& result) {
         case Tokenizer::TokenType::NUM:
             return std::to_string(result.value.TakeValue<int64_t>());
         case Tokenizer::TokenType::BOOL:
-            return ((result.value.TakeValue<int64_t>()) ? "#t" : "#f");
+            return ((result.value.TakeValue<bool>()) ? "#t" : "#f");
         default:
             break;
     }
@@ -65,6 +65,7 @@ int main() {
     ExpectEq("(abs -10)", "10");
     ExpectEq("(abs -100)", "100");
     ExpectEq("(abs 241)", "241");
+    ExpectEq("(abs (- 120 (- 423 123)))", "180");
 
     ExpectEq("(max 0)", "0");
     ExpectEq("(max 1 2)", "2");
@@ -78,15 +79,15 @@ int main() {
     
     /* Predicates */
 
-    ExpectEq("(bool? #t)", "#t");
-    ExpectEq("(bool? #f)", "#f");
+    ExpectEq("(boolean? #t)", "#t");
+    ExpectEq("(boolean? #f)", "#t");
 
-    ExpectEq("(bool? 1)", "#f");
-    ExpectEq("(bool? -42)", "#f");
+    ExpectEq("(boolean? 1)", "#f");
+    ExpectEq("(boolean? -42)", "#f");
 
-    ExpectEq("(bool? (+ 2 3))", "#f");
-    ExpectEq("(bool? (/ 4 2 2))", "#f");
-    ExpectEq("(bool? (+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10)))))", "#f");
+    ExpectEq("(boolean? (+ 2 3))", "#f");
+    ExpectEq("(boolean? (/ 4 2 2))", "#f");
+    ExpectEq("(boolean? (+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10)))))", "#f");
 /*
     Test bool
 

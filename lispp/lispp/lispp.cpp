@@ -313,8 +313,6 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     break;
             }
             break;
-        case TokenType::NAME:
-            break;
         default:
             break;
     }
@@ -427,12 +425,8 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Abs(std::shared_ptr<Pair> curr) {
     CheckUnaryArg(curr);
-
     curr = curr->next;
-
-    if (curr->type != TokenType::NUM) {
-        curr->value = Evaluate(curr).value.TakeValue<int64_t>();
-    }
+    Evaluate(curr);
 
     auto value = curr->value.TakeValue<int64_t>();
 
@@ -524,49 +518,47 @@ bool AST::LEQ(std::shared_ptr<Pair> curr) {
 bool AST::is_null(std::shared_ptr<AST::Pair> curr) {
     CheckUnaryArg(curr);
     curr = curr->next;
+    Evaluate(curr);
+
     /* Not implemented */
 }
 
 bool AST::is_pair(std::shared_ptr<Pair> curr) {
     CheckUnaryArg(curr);
     curr = curr->next;
+    Evaluate(curr);
+
     /* Not implemented */
 }
 
 bool AST::is_number(std::shared_ptr<Pair> curr) {
     CheckUnaryArg(curr);
-
     curr = curr->next;
+    Evaluate(curr);
 
-    if (curr->type == TokenType::OPEN_PARENT) {
-        auto evaluated = Evaluate(curr);
-        curr->value = evaluated.value;
-        curr->type = evaluated.type;
-    }
-
-    return (curr->value.TakeValue<Pair>().type == TokenType::NUM);
+    return (curr->type == TokenType::NUM);
 }
 
 bool AST::is_bool(std::shared_ptr<Pair> curr) {
     CheckUnaryArg(curr);
-
     curr = curr->next;
+    Evaluate(curr);
 
-    if (curr->type == TokenType::OPEN_PARENT) {
-        curr->value = Evaluate(curr);
-    }
-
-    return (curr->value.TakeValue<Pair>().type == TokenType::BOOL);
+    return (curr->type == TokenType::BOOL);
 }
 
 bool AST::is_symb(std::shared_ptr<Pair> curr) {
-    curr = curr->next;
     CheckUnaryArg(curr);
+    curr = curr->next;
+    Evaluate(curr);
+
     /* Not implemented */
 }
 
 bool AST::is_list(std::shared_ptr<Pair> curr) {
-    curr = curr->next;
     CheckUnaryArg(curr);
+    curr = curr->next;
+    Evaluate(curr);
+
     /* Not implemented */
 }
