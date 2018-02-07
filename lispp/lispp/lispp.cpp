@@ -293,6 +293,22 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->value = Abs(curr);
                     curr->type = TokenType::NUM;
                     break;
+                case 8: // 'null?'
+                    curr->value = is_null(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+                case 9: // 'pair?'
+                    curr->value = is_pair(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+                case 10: // 'number?'
+                    curr->value = is_number(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+                case 11: // 'boolean?'
+                    curr->value = is_bool(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
                 default:
                     break;
             }
@@ -304,6 +320,17 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
     }
 
     return *curr;
+}
+
+void AST::CheckUnaryArg(std::shared_ptr<Pair> func) {
+    if (!(func = func->next)) {
+        throw std::runtime_error("ERROR, not enough arguments\n");
+    }
+
+    if (func->next->type != TokenType::CLOSE_PARENT) {
+        std::cerr << static_cast<int>(func->next->type) << std::endl;
+        throw std::runtime_error("ERROR, too many arguments\n");
+    }
 }
 
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
@@ -399,15 +426,9 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Abs(std::shared_ptr<Pair> curr) {
-    if (!(curr = curr->next)) {
-        // ERROR, not enough arguments
-        return 0;
-    }
+    CheckUnaryArg(curr);
 
-    if (curr->next->type != TokenType::CLOSE_PARENT) {
-        // ERROR, too many arguments
-        return 0;
-    }
+    curr = curr->next;
 
     if (curr->type != TokenType::NUM) {
         curr->value = Evaluate(curr).value.TakeValue<int64_t>();
@@ -470,9 +491,52 @@ bool AST::LEQ(std::shared_ptr<Pair> curr) {
 
 }
 
-bool AST::is_null(std::shared_ptr<AST::Pair> curr) {}
-bool AST::is_pair(std::shared_ptr<Pair> curr) {}
-bool AST::is_number(std::shared_ptr<Pair> curr) {}
-bool AST::is_bool(std::shared_ptr<Pair> curr) {}
-bool AST::is_symb(std::shared_ptr<Pair> curr) {}
-bool AST::is_list(std::shared_ptr<Pair> curr) {}
+bool AST::is_null(std::shared_ptr<AST::Pair> curr) {
+    CheckUnaryArg(curr);
+    curr = curr->next;
+    /* Not implemented */
+}
+
+bool AST::is_pair(std::shared_ptr<Pair> curr) {
+    CheckUnaryArg(curr);
+    curr = curr->next;
+    /* Not implemented */
+}
+
+bool AST::is_number(std::shared_ptr<Pair> curr) {
+    CheckUnaryArg(curr);
+
+    curr = curr->next;
+
+    if (curr->type == TokenType::OPEN_PARENT) {
+        auto evaluated = Evaluate(curr);
+        curr->value = evaluated.value;
+        curr->type = evaluated.type;
+    }
+
+    return (curr->value.TakeValue<Pair>().type == TokenType::NUM);
+}
+
+bool AST::is_bool(std::shared_ptr<Pair> curr) {
+    CheckUnaryArg(curr);
+
+    curr = curr->next;
+
+    if (curr->type == TokenType::OPEN_PARENT) {
+        curr->value = Evaluate(curr);
+    }
+
+    return (curr->value.TakeValue<Pair>().type == TokenType::BOOL);
+}
+
+bool AST::is_symb(std::shared_ptr<Pair> curr) {
+    curr = curr->next;
+    CheckUnaryArg(curr);
+    /* Not implemented */
+}
+
+bool AST::is_list(std::shared_ptr<Pair> curr) {
+    curr = curr->next;
+    CheckUnaryArg(curr);
+    /* Not implemented */
+}
