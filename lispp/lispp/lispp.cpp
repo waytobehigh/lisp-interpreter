@@ -264,27 +264,35 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                 case 24: // '='
                     curr->value = EQ(curr);
                     curr->type = TokenType::BOOL;
+                    break;
                 case 25: // '>'
                     curr->value = GT(curr);
                     curr->type = TokenType::BOOL;
+                    break;
                 case 26: // '<'
                     curr->value = LT(curr);
                     curr->type = TokenType::BOOL;
+                    break;
                 case 27: // '>='
                     curr->value = GEQ(curr);
                     curr->type = TokenType::BOOL;
+                    break;
                 case 28: // '<='
                     curr->value = LEQ(curr);
                     curr->type = TokenType::BOOL;
+                    break;
                 case 29: // 'min'
                     curr->value = Min(curr);
                     curr->type = TokenType::NUM;
+                    break;
                 case 30: // 'max'
                     curr->value = Max(curr);
                     curr->type = TokenType::NUM;
+                    break;
                 case 31: // 'abs'
                     curr->value = Abs(curr);
                     curr->type = TokenType::NUM;
+                    break;
                 default:
                     break;
             }

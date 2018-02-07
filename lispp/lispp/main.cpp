@@ -53,7 +53,8 @@ int main() {
     /* Builtins tests */
     ExpectEq("(abs -100)", "100");
     ExpectEq("(abs 241)", "241");
-    ExpectEq("(min 1 2 3 4 5)", "2");
+
+    ExpectEq("(min 1 2 3 4 5)", "1");
 
 /*
     Test bool
