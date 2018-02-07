@@ -37,6 +37,8 @@ sstream
 -
 cstdio
 -
+cassert
+-
 lispp.h
 /Users/starlight/Desktop/Repositories/lisp-interpreter/lispp/lispp/lispp.h
 

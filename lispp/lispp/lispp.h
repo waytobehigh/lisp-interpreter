@@ -12,9 +12,6 @@
 
 #include "any.h"
 
-
-#define TEST__DUMP
-
 class Tokenizer {
 public:
     explicit Tokenizer(std::istream* input_stream);

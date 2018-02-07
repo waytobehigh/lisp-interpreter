@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstdio>
+#include <cassert>
 #include "lispp.h"
 
 void PrintResult(const AST::Pair& result) {
@@ -17,12 +18,46 @@ void PrintResult(const AST::Pair& result) {
     std::cout << std::endl;
 }
 
-int main() {
-    std::stringstream string_stream("(+ 2 3 1)");
-    AST ast(&string_stream);
+std::string ResToStr(const AST::Pair& result) {
+    switch (result.type) {
+        case Tokenizer::TokenType::NUM:
+            return std::to_string(result.value.TakeValue<int64_t>());
+        case Tokenizer::TokenType::BOOL:
+            return ((result.value.TakeValue<int64_t>()) ? "#t" : "#f");
+        default:
+            break;
+    }
+}
+
+void TEST(const std::string& expr, const std::string& ans) {
+    auto string_stream = std::stringstream(expr);
+    auto ast = AST(&string_stream);
     while (ast.InsertLexema()) {}
 
-    PrintResult(ast.Evaluate(nullptr));
+    auto res = ResToStr(ast.Evaluate(nullptr));
+
+    if (res != ans) {
+        std::cerr << "TEST FAILED: " + expr + " must be " + ans + " but got " + res;
+        std::cerr << std::endl;
+    }
+}
+
+int main() {
+    /* Output tests */
+    TEST("#f", "#f");
+    TEST("10", "10");
+
+    /* Arithmetical tests */
+    TEST("(+ 1 2)", "3");
+    TEST("(+ (* 1 2 3) (- 2 3) (/ 4 2))", "7");
+    TEST("(+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10))))", "19");
+
+    /* Builtins tests */
+    TEST("(abs -100)", "100");
+    TEST("(abs 241)", "241");
+    TEST("(max 1 2)", "2");
+
+
 
     //tokenizer.ReadNext();
     /*
