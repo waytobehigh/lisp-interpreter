@@ -50,8 +50,8 @@ private:
 
 protected:
     const std::unordered_map<std::string, int> bools_ = {
-            {"#f", 0},
-            {"#t", 1}
+            {"#f", 0}, // +
+            {"#t", 1} // +
     };
 
     const std::unordered_map<std::string, int> builtins_ = {
@@ -79,10 +79,10 @@ protected:
             {"not", 17},
 
             //  Integer math
-            {"+", 20},
-            {"-", 21},
-            {"*", 22},
-            {"/", 23},
+            {"+", 20}, // +
+            {"-", 21}, // +
+            {"*", 22}, // +
+            {"/", 23}, // +
             {"=", 24},
             {">", 25},
             {"<", 26},
@@ -90,7 +90,7 @@ protected:
             {"<=", 28},
             {"min", 29},
             {"max", 30},
-            {"abs", 31},
+            {"abs", 31}, // +
 
             //  List functions
             {"cons", 32},
@@ -137,6 +137,15 @@ private:
     bool LT(std::shared_ptr<Pair> curr);
     bool GEQ(std::shared_ptr<Pair> curr);
     bool LEQ(std::shared_ptr<Pair> curr);
+
+    bool is_null(std::shared_ptr<Pair> curr);
+    bool is_pair(std::shared_ptr<Pair> curr);
+    bool is_number(std::shared_ptr<Pair> curr);
+    bool is_bool(std::shared_ptr<Pair> curr);
+    bool is_symb(std::shared_ptr<Pair> curr);
+    bool is_list(std::shared_ptr<Pair> curr);
+
+    void CheckUnaryArg(std::shared_ptr<Pair> func);
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::shared_ptr<Pair> root_ = curr_;

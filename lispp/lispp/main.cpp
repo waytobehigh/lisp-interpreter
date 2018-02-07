@@ -45,18 +45,48 @@ int main() {
     ExpectEq("#f", "#f");
     ExpectEq("10", "10");
 
-    /* Arithmetical tests */
+    /* Int math */
+
     ExpectEq("(+ 1 2)", "3");
+    ExpectEq("(+ 1)", "1");
+    ExpectEq("(+ 1 (+ 3 4 5))", "13");
+    ExpectEq("(- 1 2)", "-1");
+    ExpectEq("(- 2 1)", "1");
+    ExpectEq("(* 5 6)", "30");
+    ExpectEq("(/ 4 2)", "2");
+    ExpectEq("(/ 4 2 2)", "1");
     ExpectEq("(+ (* 1 2 3) (- 2 3) (/ 4 2))", "7");
     ExpectEq("(+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10))))", "19");
 
-    /* Builtins tests */
+    ExpectEq("(+)", "0");
+    ExpectEq("(*)", "1");
+
+    ExpectEq("(abs 10)", "10");
+    ExpectEq("(abs -10)", "10");
     ExpectEq("(abs -100)", "100");
     ExpectEq("(abs 241)", "241");
 
-    ExpectEq("(min 1 2 3 4 5)", "1");
-    ExpectEq("(= 1 2)", "#f");
+    ExpectEq("(max 0)", "0");
+    ExpectEq("(max 1 2)", "2");
+    ExpectEq("(max 1 2 3 4 5)", "5");
 
+    ExpectEq("(min 0)", "0");
+    ExpectEq("(min 1 2)", "1");
+    ExpectEq("(min 1 2 3 4 5)", "1");
+
+    ExpectEq("(= 1 2)", "#f");
+    
+    /* Predicates */
+
+    ExpectEq("(bool? #t)", "#t");
+    ExpectEq("(bool? #f)", "#f");
+
+    ExpectEq("(bool? 1)", "#f");
+    ExpectEq("(bool? -42)", "#f");
+
+    ExpectEq("(bool? (+ 2 3))", "#f");
+    ExpectEq("(bool? (/ 4 2 2))", "#f");
+    ExpectEq("(bool? (+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10)))))", "#f");
 /*
     Test bool
 
@@ -170,47 +200,22 @@ int main() {
     ExpectRuntimeError("(<= 1 #t)");
     ExpectRuntimeError("(>= 1 #t)");
 
-    ExpectEq("(+ 1 2)", "3");
-    ExpectEq("(+ 1)", "1");
-    ExpectEq("(+ 1 (+ 3 4 5))", "13");
-    ExpectEq("(- 1 2)", "-1");
-    ExpectEq("(- 2 1)", "1");
-    ExpectEq("(* 5 6)", "30");
-    ExpectEq("(/ 4 2)", "2");
-    ExpectEq("(/ 4 2 2)", "1");
-
-    ExpectRuntimeError("(+ 1 #t)");
-    ExpectRuntimeError("(- 1 #t)");
-    ExpectRuntimeError("(* 1 #t)");
-    ExpectRuntimeError("(/ 1 #t)");
-
-    ExpectEq("(+)", "0");
-    ExpectEq("(*)", "1");
-    ExpectRuntimeError("(/)");
-    ExpectRuntimeError("(-)");
-
-    ExpectEq("(max 0)", "0");
-    ExpectEq("(min 0)", "0");
-
-    ExpectEq("(max 1 2)", "2");
-    ExpectEq("(min 1 2)", "1");
-
-    ExpectEq("(max 1 2 3 4 5)", "5");
-    ExpectEq("(min 1 2 3 4 5)", "1");
-
     ExpectRuntimeError("(max)");
     ExpectRuntimeError("(min)");
 
     ExpectRuntimeError("(max #t)");
     ExpectRuntimeError("(min #t)");
 
-    ExpectEq("(abs 10)", "10");
-    ExpectEq("(abs -10)", "10");
+    ExpectRuntimeError("(/)");
+    ExpectRuntimeError("(-)");
+    ExpectRuntimeError("(+ 1 #t)");
+    ExpectRuntimeError("(- 1 #t)");
+    ExpectRuntimeError("(* 1 #t)");
+    ExpectRuntimeError("(/ 1 #t)");
 
     ExpectRuntimeError("(abs)");
     ExpectRuntimeError("(abs #t)");
     ExpectRuntimeError("(abs 1 2)");
-
 
 
 
