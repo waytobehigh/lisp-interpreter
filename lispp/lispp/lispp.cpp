@@ -466,7 +466,6 @@ bool AST::EQ(std::shared_ptr<Pair> curr) {
         // ERROR, unexpected lexema in Div met
     }
 
-    int64_t another = 0;
     while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
         if (curr->type == TokenType::NUM) {
             if (first != (curr->value).TakeValue<int64_t>()) {
