@@ -46,7 +46,6 @@ int main() {
     ExpectEq("10", "10");
 
     /* Int math */
-
     ExpectEq("(+ 1 2)", "3");
     ExpectEq("(+ 1)", "1");
     ExpectEq("(+ 1 (+ 3 4 5))", "13");

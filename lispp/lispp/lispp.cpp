@@ -246,83 +246,83 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
         case TokenType::BUILTIN:
             switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
                     // Integer math
-                case 20: // '+'
+                case Builtins::ADD: // '+'
                     curr->value = Add(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 21: // '-'
+                case Builtins::SUB: // '-'
                     curr->value = Sub(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 22: // '*'
+                case Builtins::MUL: // '*'
                     curr->value = Mul(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 23: // '/'
+                case Builtins::DIV: // '/'
                     curr->value = Div(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 24: // '='
+                case Builtins::EQ: // '='
                     curr->value = EQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 25: // '>'
+                case Builtins::GT: // '>'
                     curr->value = GT(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 26: // '<'
+                case Builtins::LT: // '<'
                     curr->value = LT(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 27: // '>='
+                case Builtins::GEQ: // '>='
                     curr->value = GEQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 28: // '<='
+                case Builtins::LEQ: // '<='
                     curr->value = LEQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 29: // 'min'
+                case Builtins::MIN: // 'min'
                     curr->value = Min(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 30: // 'max'
+                case Builtins::MAX: // 'max'
                     curr->value = Max(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case 31: // 'abs'
+                case Builtins::ABS: // 'abs'
                     curr->value = Abs(curr);
                     curr->type = TokenType::NUM;
                     break;
 
                     // Predicates
-                case 8: // 'null?'
+                case Builtins::IS_NULL: // 'null?'
                     curr->value = is_null(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 9: // 'pair?'
+                case Builtins::IS_PAIR: // 'pair?'
                     curr->value = is_pair(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 10: // 'number?'
+                case Builtins::IS_NUMBER: // 'number?'
                     curr->value = is_number(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 11: // 'boolean?'
+                case Builtins::IS_BOOLEAN: // 'boolean?'
                     curr->value = is_bool(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 12: // 'list?'
+                case Builtins::IS_LIST: // 'list?'
                     curr->value = is_list(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case 13: // 'symb?'
+                case Builtins::IS_SYMBOL: // 'symb?'
                     curr->value = is_symb(curr);
                     curr->type = TokenType::BOOL;
                     break;
 
                     // Logic
-                case 1: //if
+                case Builtins::IF: //if
                     break;
 
                 default:
@@ -391,6 +391,8 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
 int64_t AST::Sub(std::shared_ptr<Pair> curr) {
     CheckAtLeastOneArg(curr);
 
+    curr = curr->next;
+
     Evaluate(curr);
     auto res = curr->value.TakeValue<int64_t>();
 
@@ -415,6 +417,8 @@ int64_t AST::Mul(std::shared_ptr<Pair> curr) {
 int64_t AST::Div(std::shared_ptr<Pair> curr) {
     CheckAtLeastOneArg(curr);
 
+    curr = curr->next;
+
     Evaluate(curr);
     auto res = curr->value.TakeValue<int64_t>();
 
@@ -428,9 +432,10 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
 
 int64_t AST::Abs(std::shared_ptr<Pair> curr) {
     CheckOneArg(curr);
-    curr = curr->next;
-    Evaluate(curr);
 
+    curr = curr->next;
+
+    Evaluate(curr);
     auto value = curr->value.TakeValue<int64_t>();
 
     return (value) > 0 ? value : -value;
@@ -460,6 +465,7 @@ bool AST::EQ(std::shared_ptr<Pair> curr) {
     CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
+
     Evaluate(curr);
     auto first = curr->value.TakeValue<int64_t>();
 
@@ -477,6 +483,7 @@ bool AST::GT(std::shared_ptr<Pair> curr) {
     CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
+
     Evaluate(curr);
     auto first = curr->value.TakeValue<int64_t>();
 
@@ -498,6 +505,7 @@ bool AST::LT(std::shared_ptr<Pair> curr) {
     CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
+
     Evaluate(curr);
     auto first = curr->value.TakeValue<int64_t>();
 
@@ -519,6 +527,7 @@ bool AST::GEQ(std::shared_ptr<Pair> curr) {
     CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
+
     Evaluate(curr);
     auto first = curr->value.TakeValue<int64_t>();
 
@@ -540,6 +549,7 @@ bool AST::LEQ(std::shared_ptr<Pair> curr) {
     CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
+    
     Evaluate(curr);
     auto first = curr->value.TakeValue<int64_t>();
 
