@@ -313,7 +313,8 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->type = TokenType::BOOL;
                     break;
 
-
+                case 1: //if
+                    break;
 
                 default:
                     break;
