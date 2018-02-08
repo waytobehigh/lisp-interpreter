@@ -43,6 +43,7 @@ void ExpectEq(const std::string &expr, const std::string &ans) {
 int main() {
     /* Output tests */
     ExpectEq("#f", "#f");
+    ExpectEq("#t", "#t");
     ExpectEq("10", "10");
 
     /* Int math */
@@ -106,6 +107,9 @@ int main() {
     ExpectEq("(boolean? (+ 2 3))", "#f");
     ExpectEq("(boolean? (/ 4 2 2))", "#f");
     ExpectEq("(boolean? (+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10)))))", "#f");
+
+    /* If */
+    ExpectEq("(if #t 1 2)", "1");
 /*
     Test bool
 

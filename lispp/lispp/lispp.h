@@ -26,7 +26,8 @@ public:
         CLOSE_PARENT, // 6
         PAIR, // 7
         APOSTROPH, // 8
-        END_OF_FILE // 9
+        END_OF_FILE, // 9
+        UNDEFINED //10
     };
 
     enum class Builtins {
@@ -99,8 +100,8 @@ private:
 
 protected:
     const std::unordered_map<std::string, bool> bools_ = {
-            {"#f", true}, // +
-            {"#t", false} // +
+            {"#t", true}, // +
+            {"#f", false} // +
     };
 
     const std::unordered_map<std::string, Builtins> builtins_ = {
@@ -193,6 +194,8 @@ private:
     bool is_bool(std::shared_ptr<Pair> curr);
     bool is_symb(std::shared_ptr<Pair> curr);
     bool is_list(std::shared_ptr<Pair> curr);
+
+    void If(std::shared_ptr<Pair> curr);
 
     void CheckOneArg(std::shared_ptr<Pair> func);
     void CheckAtLeastOneArg(std::shared_ptr<Pair> func);

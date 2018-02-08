@@ -164,7 +164,7 @@ std::shared_ptr<AST::Pair> AST::InsertLexema() {
             break;
 
         case TokenType::BOOL:
-            curr_->value = (GetTokenName() == "#t") ? true : false;
+            curr_->value = static_cast<bool>(GetTokenNumber());
 #ifdef TEST__DUMP
             TEST_StatusDump();
 #endif
@@ -322,8 +322,10 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     break;
 
                     // Logic
-                case Builtins::IF: //if
+                case Builtins::IF: { //if
+                    If(curr);
                     break;
+                }
 
                 default:
                     break;
@@ -615,4 +617,44 @@ bool AST::is_list(std::shared_ptr<Pair> curr) {
     /* Not implemented */
 }
 
+void AST::If(std::shared_ptr<Pair> curr) {
+    CheckAtLeastTwoArgs(curr);
+    bool no_else_branch = true;
+    /*Check if 3rd of 4th token in sequence is close parent*/
+    if (curr->next->next->next && 
+        curr->next->next->next->type != TokenType::CLOSE_PARENT) {
+        if(curr->next->next->next->next && 
+           curr->next->next->next->next->type != TokenType::CLOSE_PARENT) {
+            throw std::runtime_error("ERROR: Too many arguments, expected 2 or 3.\n");
+            return;
+        } else {
+            no_else_branch = false;
+        }
+    }
+    /*if((curr->next->next->next)->type != TokenType::CLOSE_PARENT ||
+       (curr->next->next->next->next)->type != TokenType::CLOSE_PARENT) {
+        throw std::runtime_error("ERROR: Too many arguments, expected 2 or 3.\n");        
+    }*/
 
+    auto condition = curr->next;
+    auto true_branch = condition->next;
+    auto false_branch = true_branch->next;
+    Evaluate(condition);
+
+    if(condition->type == TokenType::BOOL && 
+      (condition->value).TakeValue<bool>() == false) {
+        if (no_else_branch) {
+            throw std::runtime_error("ERROR: No else part to execute\n");
+            return;
+        }
+        Evaluate(false_branch);
+        curr->type = false_branch->type;
+        curr->value = false_branch->value;
+    } else {
+        Evaluate(true_branch);
+        curr->type = true_branch->type;
+        curr->value = true_branch->value;
+    }
+
+    return;
+}
