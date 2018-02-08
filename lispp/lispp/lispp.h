@@ -145,8 +145,8 @@ private:
     bool is_symb(std::shared_ptr<Pair> curr);
     bool is_list(std::shared_ptr<Pair> curr);
 
-    void CheckUnaryArg(std::shared_ptr<Pair> func);
-    void Eval(std::shared_ptr<Pair>* curr);
+    void CheckUnArg(std::shared_ptr<Pair> func);
+    void CheckBinArg(std::shared_ptr<Pair> func);
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::shared_ptr<Pair> root_ = curr_;
