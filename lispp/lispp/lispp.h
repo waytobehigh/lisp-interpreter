@@ -29,6 +29,55 @@ public:
         END_OF_FILE // 9
     };
 
+    enum class Builtins {
+        // Special forms
+        IF,
+        QUOTE,
+        LAMBDA,
+        DEFINE,
+        SET,
+
+        // Predicates
+        IS_NULL,
+        IS_PAIR,
+        IS_NUMBER,
+        IS_BOOLEAN,
+        IS_SYMBOL,
+        IS_LIST,
+        ARE_EQ,
+        ARE_EQUAL,
+        INTEGER_EQUAL,
+
+        // Logic
+        NOT,
+        AND,
+        OR,
+
+        // Integer math
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        EQ,
+        GT,
+        LT,
+        GEQ,
+        LEQ,
+        MIN,
+        MAX,
+        ABS,
+
+        // List functions
+        CONS,
+        CAR,
+        CDR,
+        SET_CAR,
+        SET_CDR,
+        LIST,
+        LIST_REF,
+        LIST_TAIL
+    };
+
     void ReadNext();
 
     TokenType ShowTokenType();
@@ -49,58 +98,58 @@ private:
     int64_t number_;
 
 protected:
-    const std::unordered_map<std::string, int> bools_ = {
-            {"#f", 0}, // +
-            {"#t", 1} // +
+    const std::unordered_map<std::string, bool> bools_ = {
+            {"#f", true}, // +
+            {"#t", false} // +
     };
 
-    const std::unordered_map<std::string, int> builtins_ = {
-            //  Special forms
-            {"if", 1},
-            {"quote", 2},
-            {"lambda", 3},
-            {"and", 4},
-            {"or", 5},
-            {"define", 6},
-            {"set!", 7},
+    const std::unordered_map<std::string, Builtins> builtins_ = {
+            // Special forms
+            {"if", Builtins::IF},
+            {"quote", Builtins::QUOTE},
+            {"lambda", Builtins::LAMBDA},
+            {"define", Builtins::DEFINE},
+            {"set!", Builtins::SET},
 
             //  Predicates
-            {"null?", 8},
-            {"pair?", 9},
-            {"number?", 10}, // +
-            {"boolean?", 11}, // +
-            {"symbol?", 12},
-            {"list?", 13},
-            {"eq?", 14},
-            {"equal?", 15},
-            {"integer-equal?", 16},
+            {"null?", Builtins::IS_NULL},
+            {"pair?", Builtins::IS_PAIR},
+            {"number?", Builtins::IS_NUMBER}, // +
+            {"boolean?", Builtins::IS_BOOLEAN}, // +
+            {"symbol?", Builtins::IS_SYMBOL},
+            {"list?", Builtins::LIST},
+            {"eq?", Builtins::ARE_EQ},
+            {"equal?", Builtins::ARE_EQUAL},
+            {"integer-equal?", Builtins::INTEGER_EQUAL},
 
             //  Logic
-            {"not", 17},
+            {"not", Builtins::NOT},
+            {"and", Builtins::AND},
+            {"or", Builtins::OR},
 
             //  Integer math
-            {"+", 20}, // +
-            {"-", 21}, // +
-            {"*", 22}, // +
-            {"/", 23}, // +
-            {"=", 24}, // +
-            {">", 25}, // +
-            {"<", 26}, // +
-            {">=", 27}, // +
-            {"<=", 28}, // +
-            {"min", 29}, // +
-            {"max", 30}, // +
-            {"abs", 31}, // +
+            {"+", Builtins::ADD}, // +
+            {"-", Builtins::SUB}, // +
+            {"*", Builtins::MUL}, // +
+            {"/", Builtins::DIV}, // +
+            {"=", Builtins::EQ}, // +
+            {">", Builtins::GT}, // +
+            {"<", Builtins::LT}, // +
+            {">=", Builtins::GEQ}, // +
+            {"<=", Builtins::LEQ}, // +
+            {"min", Builtins::MIN}, // +
+            {"max", Builtins::MAX}, // +
+            {"abs", Builtins::ABS}, // +
 
             //  List functions
-            {"cons", 32},
-            {"car", 33},
-            {"cdr", 34},
-            {"set-car!", 35},
-            {"set-cdr!", 36},
-            {"list", 37},
-            {"list-ref", 38},
-            {"list-tail", 39},
+            {"cons", Builtins::CONS},
+            {"car", Builtins::CAR},
+            {"cdr", Builtins::CDR},
+            {"set-car!", Builtins::SET_CAR},
+            {"set-cdr!", Builtins::SET_CDR},
+            {"list", Builtins::LIST},
+            {"list-ref", Builtins::LIST_REF},
+            {"list-tail", Builtins::LIST_TAIL},
     };
 };
 
