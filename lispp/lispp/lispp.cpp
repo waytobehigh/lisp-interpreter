@@ -245,6 +245,7 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
             break;
         case TokenType::BUILTIN:
             switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
+                    // Integer math
                 case 20: // '+'
                     curr->value = Add(curr);
                     curr->type = TokenType::NUM;
@@ -294,8 +295,7 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->type = TokenType::NUM;
                     break;
 
-
-
+                    // Predicates
                 case 8: // 'null?'
                     curr->value = is_null(curr);
                     curr->type = TokenType::BOOL;
@@ -312,7 +312,16 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->value = is_bool(curr);
                     curr->type = TokenType::BOOL;
                     break;
+                case 12: // 'list?'
+                    curr->value = is_list(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+                case 13: // 'symb?'
+                    curr->value = is_symb(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
 
+                    // Logic
                 case 1: //if
                     break;
 
