@@ -334,14 +334,8 @@ void AST::CheckUnaryArg(std::shared_ptr<Pair> func) {
 int64_t AST::Add(std::shared_ptr<Pair> curr) {
     int64_t res = 0;
     while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
-        if         (curr->type == TokenType::NUM) {
-            res += (curr->value).TakeValue<int64_t>();
-        } else if (curr->type == TokenType::OPEN_PARENT) {
-            auto evaluated = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
-            res += evaluated.value.TakeValue<int64_t>();
-        } else {
-            // ERROR, unexpected lexema in Add met
-        }
+        Evaluate(curr);
+        res += curr->value.TakeValue<int64_t>();
     }
 
     return res;
