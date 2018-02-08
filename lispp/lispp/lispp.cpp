@@ -241,7 +241,7 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
             auto res = Evaluate(curr->value.TakeValue<std::shared_ptr<Pair>>());
             curr->value = res.value;
             curr->type = res.type;
-        }
+            }
             break;
         case TokenType::BUILTIN:
             switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
@@ -604,3 +604,5 @@ bool AST::is_list(std::shared_ptr<Pair> curr) {
 
     /* Not implemented */
 }
+
+
