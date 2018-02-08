@@ -67,8 +67,8 @@ protected:
             //  Predicates
             {"null?", 8},
             {"pair?", 9},
-            {"number?", 10},
-            {"boolean?", 11},
+            {"number?", 10}, // +
+            {"boolean?", 11}, // +
             {"symbol?", 12},
             {"list?", 13},
             {"eq?", 14},
@@ -83,13 +83,13 @@ protected:
             {"-", 21}, // +
             {"*", 22}, // +
             {"/", 23}, // +
-            {"=", 24},
-            {">", 25},
-            {"<", 26},
-            {">=", 27},
-            {"<=", 28},
-            {"min", 29},
-            {"max", 30},
+            {"=", 24}, // +
+            {">", 25}, // +
+            {"<", 26}, // +
+            {">=", 27}, // +
+            {"<=", 28}, // +
+            {"min", 29}, // +
+            {"max", 30}, // +
             {"abs", 31}, // +
 
             //  List functions
@@ -145,8 +145,11 @@ private:
     bool is_symb(std::shared_ptr<Pair> curr);
     bool is_list(std::shared_ptr<Pair> curr);
 
-    void CheckUnArg(std::shared_ptr<Pair> func);
-    void CheckBinArg(std::shared_ptr<Pair> func);
+    void CheckOneArg(std::shared_ptr<Pair> func);
+    void CheckAtLeastOneArg(std::shared_ptr<Pair> func);
+
+    void CheckTwoArgs(std::shared_ptr<Pair> func);
+    void CheckAtLeastTwoArgs(std::shared_ptr<Pair> func);
 
     std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
     std::shared_ptr<Pair> root_ = curr_;

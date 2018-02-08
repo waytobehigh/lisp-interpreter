@@ -293,6 +293,9 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->value = Abs(curr);
                     curr->type = TokenType::NUM;
                     break;
+
+
+
                 case 8: // 'null?'
                     curr->value = is_null(curr);
                     curr->type = TokenType::BOOL;
@@ -309,6 +312,9 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     curr->value = is_bool(curr);
                     curr->type = TokenType::BOOL;
                     break;
+
+
+
                 default:
                     break;
             }
@@ -320,20 +326,45 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
     return *curr;
 }
 
-void AST::CheckUnArg(std::shared_ptr<Pair> func) {
+void AST::CheckOneArg(std::shared_ptr<Pair> func) {
     if (!(func = func->next)) {
-        throw std::runtime_error("ERROR, not enough arguments\n");
+        throw std::runtime_error("ERROR: Not enough arguments, expected 1.\n");
     }
 
     if (func->next->type != TokenType::CLOSE_PARENT) {
         std::cerr << static_cast<int>(func->next->type) << std::endl;
-        throw std::runtime_error("ERROR, too many arguments\n");
+        throw std::runtime_error("ERROR: Too many arguments, expected 1.\n");
     }
 }
 
-void AST::CheckBinArg(std::shared_ptr<Pair> func) {
-    if (!(func = func->next) && !func->next) {
-        throw std::runtime_error("Not enough arguments, expected two");
+void AST::CheckAtLeastOneArg(std::shared_ptr<Pair> func) {
+    if (!(func = func->next)) {
+        throw std::runtime_error("ERROR: Not enough arguments, expected at least 1.\n");
+    }
+}
+
+void AST::CheckTwoArgs(std::shared_ptr<Pair> func) {
+    if (!(func = func->next)) {
+        throw std::runtime_error("Not enough arguments, expected 2 but got 0.\n");
+    }
+
+    if (!(func = func->next)) {
+        throw std::runtime_error("Not enough arguments, expected 2 but got 1.\n");
+    }
+
+    if (func->next->type != TokenType::CLOSE_PARENT) {
+        std::cerr << static_cast<int>(func->next->type) << std::endl;
+        throw std::runtime_error("ERROR: Too many arguments, expected 2.\n");
+    }
+}
+
+void AST::CheckAtLeastTwoArgs(std::shared_ptr<Pair> func) {
+    if (!(func = func->next)) {
+        throw std::runtime_error("ERROR: Not enough arguments, expected at least 2 but got 0.\n");
+    }
+
+    if (!func->next) {
+        throw std::runtime_error("ERROR: Not enough arguments, expected at least 2 but got 1.\n");
     }
 }
 
@@ -348,10 +379,7 @@ int64_t AST::Add(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Sub(std::shared_ptr<Pair> curr) {
-    if (!(curr = curr->next)) {
-        // ERROR, absence of the next element
-        return 0;
-    }
+    CheckAtLeastOneArg(curr);
 
     Evaluate(curr);
     auto res = curr->value.TakeValue<int64_t>();
@@ -375,10 +403,7 @@ int64_t AST::Mul(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Div(std::shared_ptr<Pair> curr) {
-    if (!(curr = curr->next)) {
-        // ERROR, absence of the next element
-        return 0;
-    }
+    CheckAtLeastOneArg(curr);
 
     Evaluate(curr);
     auto res = curr->value.TakeValue<int64_t>();
@@ -392,7 +417,7 @@ int64_t AST::Div(std::shared_ptr<Pair> curr) {
 }
 
 int64_t AST::Abs(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -422,7 +447,7 @@ int64_t AST::Max(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::EQ(std::shared_ptr<Pair> curr) {
-    CheckBinArg(curr);
+    CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
     Evaluate(curr);
@@ -439,7 +464,7 @@ bool AST::EQ(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::GT(std::shared_ptr<Pair> curr) {
-    CheckBinArg(curr);
+    CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
     Evaluate(curr);
@@ -460,7 +485,7 @@ bool AST::GT(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::LT(std::shared_ptr<Pair> curr) {
-    CheckBinArg(curr);
+    CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
     Evaluate(curr);
@@ -481,7 +506,7 @@ bool AST::LT(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::GEQ(std::shared_ptr<Pair> curr) {
-    CheckBinArg(curr);
+    CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
     Evaluate(curr);
@@ -502,7 +527,7 @@ bool AST::GEQ(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::LEQ(std::shared_ptr<Pair> curr) {
-    CheckBinArg(curr);
+    CheckAtLeastTwoArgs(curr);
 
     curr = curr->next;
     Evaluate(curr);
@@ -523,7 +548,7 @@ bool AST::LEQ(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::is_null(std::shared_ptr<AST::Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -531,7 +556,7 @@ bool AST::is_null(std::shared_ptr<AST::Pair> curr) {
 }
 
 bool AST::is_pair(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -539,7 +564,7 @@ bool AST::is_pair(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::is_number(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -547,7 +572,7 @@ bool AST::is_number(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::is_bool(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -555,7 +580,7 @@ bool AST::is_bool(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::is_symb(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
@@ -563,7 +588,7 @@ bool AST::is_symb(std::shared_ptr<Pair> curr) {
 }
 
 bool AST::is_list(std::shared_ptr<Pair> curr) {
-    CheckUnArg(curr);
+    CheckOneArg(curr);
     curr = curr->next;
     Evaluate(curr);
 
