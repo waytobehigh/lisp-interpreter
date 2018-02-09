@@ -81,11 +81,11 @@ public:
 
     void ReadNext();
 
-    TokenType ShowTokenType();
+    TokenType ShowTokenType() const;
 
-    const std::string& GetTokenName();
+    const std::string& GetTokenName() const;
 
-    int64_t GetTokenNumber();
+    int64_t GetTokenNumber() const;
 
 private:
     bool IsNumber(const std::string& token);
@@ -106,7 +106,6 @@ protected:
 
     const std::unordered_map<std::string, Builtins> builtins_ = {
             // Special forms
-            {"if", Builtins::IF},
             {"quote", Builtins::QUOTE},
             {"lambda", Builtins::LAMBDA},
             {"define", Builtins::DEFINE},
@@ -124,6 +123,7 @@ protected:
             {"integer-equal?", Builtins::INTEGER_EQUAL},
 
             //  Logic
+            {"if", Builtins::IF},
             {"not", Builtins::NOT},
             {"and", Builtins::AND},
             {"or", Builtins::OR},
@@ -196,6 +196,7 @@ private:
     bool is_list(std::shared_ptr<Pair> curr);
 
     void If(std::shared_ptr<Pair> curr);
+    bool NOT(std::shared_ptr<Pair> curr);
     bool AND(std::shared_ptr<Pair> curr);
     bool OR(std::shared_ptr<Pair> curr);
 

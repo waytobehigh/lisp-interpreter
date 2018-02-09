@@ -33,7 +33,7 @@ void Tokenizer::ReadNext() {
         number_ = std::stoll(token, processed, 10);
         type_ = TokenType::NUM;
     } else if (IsBool(token)) {
-        number_ = bools_.at(token);
+        name_ = token;
         type_ = TokenType::BOOL;
     } else if (IsBuiltin(token)) {
         name_ = token;
@@ -56,15 +56,15 @@ void Tokenizer::ReadNext() {
     }
 }
 
-Tokenizer::TokenType Tokenizer::ShowTokenType() {
+Tokenizer::TokenType Tokenizer::ShowTokenType() const{
     return type_;
 }
 
-const std::string &Tokenizer::GetTokenName() {
+const std::string &Tokenizer::GetTokenName() const{
     return name_;
 }
 
-int64_t Tokenizer::GetTokenNumber() {
+int64_t Tokenizer::GetTokenNumber() const {
     return number_;
 }
 
@@ -164,7 +164,7 @@ std::shared_ptr<AST::Pair> AST::InsertLexema() {
             break;
 
         case TokenType::BOOL:
-            curr_->value = static_cast<bool>(GetTokenNumber());
+            curr_->value = bools_.at(GetTokenName());
 #ifdef TEST__DUMP
             TEST_StatusDump();
 #endif
@@ -324,6 +324,11 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     // Logic
                 case Builtins::IF: //if
                     If(curr);
+                    break;
+
+                case Builtins::NOT:
+                    curr->value = NOT(curr);
+                    curr->type = TokenType::BOOL;
                     break;
 
                 case Builtins::AND:
@@ -664,6 +669,14 @@ void AST::If(std::shared_ptr<Pair> curr) {
         curr->type = true_branch->type;
         curr->value = true_branch->value;
     }
+}
+
+bool AST::NOT(std::shared_ptr<Pair> curr) {
+    CheckOneArg(curr);
+    curr = curr->next;
+    Evaluate(curr);
+
+    return (curr->type == TokenType::BOOL && curr->value.TakeValue<bool>() == false);
 }
 
 bool AST::AND(std::shared_ptr<Pair> curr) {

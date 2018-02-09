@@ -111,9 +111,15 @@ int main() {
     /* If */
     ExpectEq("(if #t 1 2)", "1");
 
+    ExpectEq("(not 2)", "#f");
+    ExpectEq("(not #t)", "#f");
+    ExpectEq("(not #f)", "#t");
+    ExpectEq("(not (boolean? 2))", "#t");
+
     ExpectEq("(and 1 #t)", "#t");
     ExpectEq("(and #t #f)", "#f");
     ExpectEq("(and #t (boolean? #f))", "#t");
+    ExpectEq("(and (boolean? #f) #t (= (+ 1 2) (- 7 4)) #t)", "#t");
 
     ExpectEq("(or #t #f)", "#t");
     ExpectEq("(or #f 1)", "#t");
