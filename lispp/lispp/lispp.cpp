@@ -322,10 +322,19 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
                     break;
 
                     // Logic
-                case Builtins::IF: { //if
+                case Builtins::IF: //if
                     If(curr);
                     break;
-                }
+
+                case Builtins::AND:
+                    curr->value = AND(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+
+                case Builtins::OR:
+                    curr->value = OR(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
 
                 default:
                     break;
@@ -655,6 +664,30 @@ void AST::If(std::shared_ptr<Pair> curr) {
         curr->type = true_branch->type;
         curr->value = true_branch->value;
     }
+}
 
-    return;
+bool AST::AND(std::shared_ptr<Pair> curr) {
+    bool is_true = true;
+
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
+        Evaluate(curr);
+        if (curr->type == TokenType::BOOL && curr->value.TakeValue<bool>() == false) {
+            is_true = false;
+        }
+    }
+
+    return is_true;
+}
+
+bool AST::OR(std::shared_ptr<Pair> curr) {
+    bool is_true = false;
+
+    while ((curr = curr->next)->type != TokenType::CLOSE_PARENT) {
+        Evaluate(curr);
+        if (curr->type != TokenType::BOOL || curr->value.TakeValue<bool>() != false) {
+            is_true = true;
+        }
+    }
+
+    return is_true;
 }

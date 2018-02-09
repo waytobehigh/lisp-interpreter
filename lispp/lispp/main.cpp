@@ -110,6 +110,15 @@ int main() {
 
     /* If */
     ExpectEq("(if #t 1 2)", "1");
+
+    ExpectEq("(and 1 #t)", "#t");
+    ExpectEq("(and #t #f)", "#f");
+    ExpectEq("(and #t (boolean? #f))", "#t");
+
+    ExpectEq("(or #t #f)", "#t");
+    ExpectEq("(or #f 1)", "#t");
+    ExpectEq("(or #f #f)", "#f");
+    ExpectEq("(or (boolean? #t) (boolean? 1))", "#t");
 /*
     Test bool
 

@@ -196,6 +196,8 @@ private:
     bool is_list(std::shared_ptr<Pair> curr);
 
     void If(std::shared_ptr<Pair> curr);
+    bool AND(std::shared_ptr<Pair> curr);
+    bool OR(std::shared_ptr<Pair> curr);
 
     void CheckOneArg(std::shared_ptr<Pair> func);
     void CheckAtLeastOneArg(std::shared_ptr<Pair> func);
