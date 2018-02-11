@@ -246,83 +246,91 @@ const AST::Pair& AST::Evaluate(std::shared_ptr<Pair> curr) {
         case TokenType::BUILTIN:
             switch (Tokenizer::builtins_.at(curr->value.TakeValue<std::string>())) {
                     // Integer math
-                case Builtins::ADD: // '+'
+                case Builtins::ADD:
                     curr->value = Add(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::SUB: // '-'
+                case Builtins::SUB:
                     curr->value = Sub(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::MUL: // '*'
+                case Builtins::MUL:
                     curr->value = Mul(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::DIV: // '/'
+                case Builtins::DIV:
                     curr->value = Div(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::EQ: // '='
+                case Builtins::EQ:
                     curr->value = EQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::GT: // '>'
+                case Builtins::GT:
                     curr->value = GT(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::LT: // '<'
+                case Builtins::LT:
                     curr->value = LT(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::GEQ: // '>='
+                case Builtins::GEQ:
                     curr->value = GEQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::LEQ: // '<='
+                case Builtins::LEQ:
                     curr->value = LEQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::MIN: // 'min'
+                case Builtins::MIN:
                     curr->value = Min(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::MAX: // 'max'
+                case Builtins::MAX:
                     curr->value = Max(curr);
                     curr->type = TokenType::NUM;
                     break;
-                case Builtins::ABS: // 'abs'
+                case Builtins::ABS:
                     curr->value = Abs(curr);
                     curr->type = TokenType::NUM;
                     break;
 
                     // Predicates
-                case Builtins::IS_NULL: // 'null?'
+                case Builtins::IS_NULL:
                     curr->value = is_null(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::IS_PAIR: // 'pair?'
+                case Builtins::IS_PAIR:
                     curr->value = is_pair(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::IS_NUMBER: // 'number?'
+                case Builtins::IS_NUMBER:
                     curr->value = is_number(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::IS_BOOLEAN: // 'boolean?'
+                case Builtins::IS_BOOLEAN:
                     curr->value = is_bool(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::IS_LIST: // 'list?'
+                case Builtins::IS_LIST:
                     curr->value = is_list(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::IS_SYMBOL: // 'symb?'
+                case Builtins::IS_SYMBOL:
                     curr->value = is_symb(curr);
                     curr->type = TokenType::BOOL;
                     break;
+                case Builtins::ARE_EQ:
+                    curr->value = ARE_EQ(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
+                case Builtins::ARE_EQUAL:
+                    break;
+                case Builtins::INT_EQ:
+                    break;
 
                     // Logic
-                case Builtins::IF: //if
+                case Builtins::IF:
                     If(curr);
                     break;
 
@@ -703,4 +711,40 @@ bool AST::OR(std::shared_ptr<Pair> curr) {
     }
 
     return is_true;
+}
+
+bool AST::ARE_EQ(std::shared_ptr<Pair> curr) {
+
+}
+
+bool AST::ARE_EQUAL(std::shared_ptr<Pair> curr) {
+    CheckTwoArgs(curr);
+    curr = curr->next;
+    Evaluate(curr);
+    Evaluate(curr->next);
+
+    if (curr->type != curr->next->type) {
+        return false;
+    }
+
+    switch (curr->type) {
+        case TokenType::NUM: {
+            auto first = curr->value.TakeValue<int64_t>();
+            auto second = curr->next->value.TakeValue<int64_t>();
+            return first == second;
+        }
+        case TokenType::BOOL: {
+            auto first = curr->value.TakeValue<bool>();
+            auto second = curr->next->value.TakeValue<bool>();
+            return first == second;
+        }
+        default:
+            std::runtime_error("Incomparable types\n");
+            break;
+    }
+
+}
+
+bool AST::INT_EQ(std::shared_ptr<Pair> curr) {
+
 }

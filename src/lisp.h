@@ -30,6 +30,7 @@ public:
         UNDEFINED //10
     };
 
+
     enum class Builtins {
         // Special forms
         IF,
@@ -47,7 +48,7 @@ public:
         IS_LIST,
         ARE_EQ,
         ARE_EQUAL,
-        INTEGER_EQUAL,
+        INT_EQ,
 
         // Logic
         NOT,
@@ -118,15 +119,15 @@ protected:
             {"boolean?", Builtins::IS_BOOLEAN}, // +
             {"symbol?", Builtins::IS_SYMBOL},
             {"list?", Builtins::LIST},
-            {"eq?", Builtins::ARE_EQ},
             {"equal?", Builtins::ARE_EQUAL},
-            {"integer-equal?", Builtins::INTEGER_EQUAL},
+            {"eq?", Builtins::ARE_EQ},
+            {"integer-equal?", Builtins::INT_EQ},
 
             //  Logic
-            {"if", Builtins::IF},
-            {"not", Builtins::NOT},
-            {"and", Builtins::AND},
-            {"or", Builtins::OR},
+            {"if", Builtins::IF}, // +
+            {"not", Builtins::NOT}, // +
+            {"and", Builtins::AND}, // +
+            {"or", Builtins::OR}, // +
 
             //  Integer math
             {"+", Builtins::ADD}, // +
@@ -187,6 +188,9 @@ private:
     bool LT(std::shared_ptr<Pair> curr);
     bool GEQ(std::shared_ptr<Pair> curr);
     bool LEQ(std::shared_ptr<Pair> curr);
+    bool ARE_EQUAL(std::shared_ptr<Pair> curr);
+    bool ARE_EQ(std::shared_ptr<Pair> curr);
+    bool INT_EQ(std::shared_ptr<Pair> curr);
 
     bool is_null(std::shared_ptr<Pair> curr);
     bool is_pair(std::shared_ptr<Pair> curr);

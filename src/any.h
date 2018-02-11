@@ -55,7 +55,7 @@ public:
     void Swap(Any& rhs) {
         content_.swap(rhs.content_);
     }
-
+    
     template<class T>
     T& TakeValue() const {
         if (typeid(T) != content_->TypeInfo()) {
