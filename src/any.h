@@ -1,7 +1,7 @@
 #pragma once
 
-#include <typeinfo>
 #include <iostream>
+#include <typeinfo>
 
 struct PlaceHolder {
     virtual const std::type_info& TypeInfo() const = 0;
