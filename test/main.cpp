@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "lispp.h"
+#include "../src/lispp.h"
 
 void PrintResult(const AST::Pair& result) {
     switch (result.type) {
@@ -25,6 +25,8 @@ std::string ResToStr(const AST::Pair& result) {
         default:
             break;
     }
+
+    return std::string();
 }
 
 void ExpectEq(const std::string &expr, const std::string &ans) {
@@ -125,6 +127,7 @@ int main() {
     ExpectEq("(or #f 1)", "#t");
     ExpectEq("(or #f #f)", "#f");
     ExpectEq("(or (boolean? #t) (boolean? 1))", "#t");
+
 /*
     Test bool
 

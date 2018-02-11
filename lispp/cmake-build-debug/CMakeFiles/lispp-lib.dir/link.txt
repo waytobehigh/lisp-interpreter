@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc liblispp-lib.a  CMakeFiles/lispp-lib.dir/lispp/lispp.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib liblispp-lib.a
