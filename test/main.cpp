@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "../src/lispp.h"
+#include "../src/lisp.h"
 
 void PrintResult(const AST::Pair& result) {
     switch (result.type) {

@@ -1,5 +1,7 @@
 cmake-build-debug/
 
 .DS_Store
+.idea
+
 CMakeLists.txt
 lisp

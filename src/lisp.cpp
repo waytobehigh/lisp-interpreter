@@ -1,5 +1,5 @@
 #include <tic.h>
-#include "lispp.h"
+#include "lisp.h"
 
 Tokenizer::Tokenizer(std::istream *input_stream)
         : input_stream_(input_stream) {}
