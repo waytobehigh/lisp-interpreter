@@ -338,13 +338,17 @@ const Evaluate::Pair& Evaluate::Eval(std::shared_ptr<Pair> curr) {
                     curr->value = is_symb(curr);
                     curr->type = TokenType::BOOL;
                     break;
+                case Builtins::ARE_EQUAL:
+                    curr->value = ARE_EQUAL(curr);
+                    curr->type = TokenType::BOOL;
+                    break;
                 case Builtins::ARE_EQ:
                     curr->value = ARE_EQ(curr);
                     curr->type = TokenType::BOOL;
                     break;
-                case Builtins::ARE_EQUAL:
-                    break;
                 case Builtins::INT_EQ:
+                    curr->value = INT_EQ(curr);
+                    curr->type = TokenType::BOOL;
                     break;
 
                     // Logic

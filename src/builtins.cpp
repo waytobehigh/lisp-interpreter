@@ -353,10 +353,6 @@ bool Evaluate::OR(std::shared_ptr<Pair> curr) {
     return is_true;
 }
 
-bool Evaluate::ARE_EQ(std::shared_ptr<Pair> curr) {
-
-}
-
 bool Evaluate::ARE_EQUAL(std::shared_ptr<Pair> curr) {
     CheckTwoArgs(curr);
     curr = curr->next;
@@ -385,6 +381,10 @@ bool Evaluate::ARE_EQUAL(std::shared_ptr<Pair> curr) {
 
 }
 
-bool Evaluate::INT_EQ(std::shared_ptr<Pair> curr) {
+bool Evaluate::ARE_EQ(std::shared_ptr<Pair> curr) {
+    return ARE_EQUAL(curr);
+}
 
+bool Evaluate::INT_EQ(std::shared_ptr<Pair> curr) {
+    return EQ(curr);
 }

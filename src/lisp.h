@@ -119,9 +119,9 @@ protected:
             {"boolean?", Builtins::IS_BOOLEAN}, // +
             {"symbol?", Builtins::IS_SYMBOL},
             {"list?", Builtins::LIST},
-            {"equal?", Builtins::ARE_EQUAL},
-            {"eq?", Builtins::ARE_EQ},
-            {"integer-equal?", Builtins::INT_EQ},
+            {"equal?", Builtins::ARE_EQUAL}, // +
+            {"eq?", Builtins::ARE_EQ}, // +
+            {"integer-equal?", Builtins::INT_EQ}, // +
 
             //  Logic
             {"if", Builtins::IF}, // +

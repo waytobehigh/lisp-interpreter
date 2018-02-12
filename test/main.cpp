@@ -45,6 +45,7 @@ int main() {
     ExpectEq("(min 1 2)", "1");
     ExpectEq("(min 1 2 3 4 5)", "1");
 
+    // Bad reaction on non-integer arguments
     ExpectEq("(= 1 1)", "#t");
     ExpectEq("(= 1 4)", "#f");
     ExpectEq("(= (+ 10 5) (* 3 5))", "#t");
@@ -77,6 +78,17 @@ int main() {
     ExpectEq("(boolean? (+ 2 3))", "#f");
     ExpectEq("(boolean? (/ 4 2 2))", "#f");
     ExpectEq("(boolean? (+ 800 (- 100 230 (* 21 31 (/ 10 (- 3 2) 10)))))", "#f");
+
+    ExpectEq("(equal? #t #f)", "#f");
+    ExpectEq("(equal? (+ 1 2) (+ 3))", "#t");
+
+    ExpectEq("(eq? 1 2)", "#f");
+    ExpectEq("(eq? 1 (+ 3 (- 1)))", "#f");
+    ExpectEq("(eq? 1 (+ 3 (- 2)))", "#f");
+
+    ExpectEq("(integer-equal? 1 2 3)", "#f");
+    ExpectEq("(integer-equal? 1 1 1)", "#t");
+    // ExpectEq("(integer-equal? 1 #f 1)", "#t");
 
     /* If */
     ExpectEq("(if #t 1 2)", "1");
