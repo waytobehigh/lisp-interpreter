@@ -14,7 +14,7 @@
 
 class Tokenizer {
 public:
-    explicit Tokenizer(std::istream* input_stream);
+    explicit Tokenizer(std::unique_ptr<std::istream> input_stream);
 
     enum class TokenType {
         UNKNOWN, // 0
@@ -94,7 +94,7 @@ private:
     bool IsBool(const std::string &token);
     bool IsBuiltin(const std::string &token);
 
-    std::istream* input_stream_;
+    std::shared_ptr<std::istream> input_stream_;
     TokenType type_;
     std::string name_;
     int64_t number_;
@@ -166,14 +166,27 @@ public:
         std::shared_ptr<Pair> next;
     };
 
-    AST(std::istream* input_stream);
+    AST(std::unique_ptr<std::istream> input_stream);
     std::shared_ptr<Pair> InsertLexema();
-    const Pair& Evaluate(std::shared_ptr<Pair> curr);
+
+protected:
+    std::shared_ptr<Pair> root_;
 
 private:
     inline void TurnNext();
     inline void TurnDown();
     void TEST_StatusDump();
+
+    std::shared_ptr<Pair> curr_;
+    std::vector<std::shared_ptr<Pair>> return_stack_;
+};
+
+class Evaluate : protected AST, public std::string {
+public:
+    Evaluate(const std::string &expr);
+
+private:
+    const Pair& Eval(std::shared_ptr<Pair> curr);
 
     int64_t Add(std::shared_ptr<Pair> curr);
     int64_t Sub(std::shared_ptr<Pair> curr);
@@ -209,8 +222,4 @@ private:
 
     void CheckTwoArgs(std::shared_ptr<Pair> func);
     void CheckAtLeastTwoArgs(std::shared_ptr<Pair> func);
-
-    std::shared_ptr<Pair> curr_ = std::make_shared<Pair>();
-    std::shared_ptr<Pair> root_ = curr_;
-    std::vector<std::shared_ptr<Pair> > return_stack_;
 };

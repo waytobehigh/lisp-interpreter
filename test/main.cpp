@@ -1,40 +1,8 @@
 #include <iostream>
-#include <sstream>
 #include "../src/lisp.h"
 
-void PrintResult(const AST::Pair& result) {
-    switch (result.type) {
-        case Tokenizer::TokenType::NUM:
-            std::cout << result.value.TakeValue<int64_t>();
-            break;
-        case Tokenizer::TokenType::BOOL:
-            std::cout << ((result.value.TakeValue<int64_t>()) ? "#t" : "#f");
-            break;
-        default:
-            break;
-    }
-    std::cout << std::endl;
-}
-
-std::string ResToStr(const AST::Pair& result) {
-    switch (result.type) {
-        case Tokenizer::TokenType::NUM:
-            return std::to_string(result.value.TakeValue<int64_t>());
-        case Tokenizer::TokenType::BOOL:
-            return ((result.value.TakeValue<bool>()) ? "#t" : "#f");
-        default:
-            break;
-    }
-
-    return std::string();
-}
-
 void ExpectEq(const std::string &expr, const std::string &ans) {
-    auto string_stream = std::stringstream(expr);
-    auto ast = AST(&string_stream);
-    while (ast.InsertLexema()) {}
-
-    auto res = ResToStr(ast.Evaluate(nullptr));
+    auto res = Evaluate(expr);
 
     if (res != ans) {
         std::cerr << "TEST FAILED: " + expr + " must be " + ans + " but got " + res;
