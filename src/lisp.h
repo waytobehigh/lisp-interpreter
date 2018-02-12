@@ -156,7 +156,7 @@ protected:
 };
 
 class AST : protected Tokenizer {
-public:
+protected:
     struct Pair {
         Pair();
 
@@ -166,11 +166,11 @@ public:
         std::shared_ptr<Pair> next;
     };
 
+    std::shared_ptr<Pair> root_;
+
+public:
     AST(std::unique_ptr<std::istream> input_stream);
     std::shared_ptr<Pair> InsertLexema();
-
-protected:
-    std::shared_ptr<Pair> root_;
 
 private:
     inline void TurnNext();

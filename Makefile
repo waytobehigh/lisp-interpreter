@@ -2,7 +2,7 @@ CC      = g++
 CFLAGS  = -c -Wall -fsanitize=address --std=c++14
 LDFLAGS = -fsanitize=address
 
-SOURCES    = test/main.cpp src/lisp.cpp
+SOURCES    = test/main.cpp src/lisp.cpp src/builtins.cpp
 LIBS       = src/lisp.h src/any.h
 OBJECTS    = $(SOURCES:.cpp=.o)
 EXECUTABLE = lisp
